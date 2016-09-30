@@ -19,14 +19,17 @@ public class EventJsonController {
     @Autowired
      UserRepository users;
 
+//    @Autowired
+//     ContactRepository contacts;
+
     User user;
 
 
-    @RequestMapping(path = "createAdmin", method = RequestMethod.POST)
+    @RequestMapping(path = "/createAdmin", method = RequestMethod.GET)
     public User adminUser(HttpSession session) throws Exception {
         User theAdmin = new User();
 
-        theAdmin.id = 1;
+//        theAdmin.id = 1;
         theAdmin.email = "Admin@gmail.com";
         theAdmin.displayName = "Admin";
         theAdmin.password = "admin";
@@ -97,11 +100,22 @@ public class EventJsonController {
         return getMyEvents();
     }
 
-    @RequestMapping(path = "/myEvents", method = RequestMethod.POST)
-    public ArrayList<Event> myEvents(HttpSession session) throws Exception{
+    @RequestMapping(path = "/deleteEvent", method = RequestMethod.POST)
+    public ArrayList<Event> deleteEvent(HttpSession session) throws Exception{
+        Event event = (Event) session.getAttribute("event");
+
+        System.out.println("My runtime repo to delete event: " + event.toString());
+        events.delete(event);
 
         return getMyEvents();
     }
+
+
+//    @RequestMapping(path = "/myEvents", method = RequestMethod.POST)
+//    public ArrayList<Event> myEvents(HttpSession session) throws Exception{
+//
+//        return getMyEvents();
+//    }
 
 
     @RequestMapping(path = "/allEvents", method = RequestMethod.POST)
@@ -148,5 +162,23 @@ public class EventJsonController {
         }
         return eventList;
     }
+//    @RequestMapping(path = "/myContacts", method = RequestMethod.POST)
+//    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
+//    User user = (User) session.getAttribute("user");
+//        return getAllMyContacts();
+//    }
+//
+//
+//    ArrayList<Event> getAllMyContacts() {
+//        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+//        Iterable<Contacts> allFriends = events.findAll(); //change this to a whatever we name our find friend by user
+//
+//        if (user != null){
+//            for (Event currentFriend : allFriends) {
+//                friendList.add(currentFriend);
+//            }
+//        }
+//        return friendList;
+//    }
 
 }
