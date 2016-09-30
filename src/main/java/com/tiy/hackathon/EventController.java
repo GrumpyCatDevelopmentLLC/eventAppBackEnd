@@ -26,10 +26,10 @@ public class EventController {
 	}
 
 	@RequestMapping(path = "/newUser", method = RequestMethod.POST)
-	public String newUser(HttpSession session, String email, String password) {
+	public String newUser(HttpSession session, String email, String displayName, String password) {
 	User user = users.findFirstByEmail(email);
 		if (user == null) {
-			user = new User(email, password);
+			user = new User(email, displayName, password);
 			users.save(user);
 		}
 		return "redirect:/";
@@ -45,5 +45,10 @@ public class EventController {
 		}
 		session.setAttribute("user", user);
 		return "redirect:/events";
+	}
+
+	@RequestMapping(path = "/events", method = RequestMethod.GET)
+	public String events() {
+		return "/events";
 	}
 }

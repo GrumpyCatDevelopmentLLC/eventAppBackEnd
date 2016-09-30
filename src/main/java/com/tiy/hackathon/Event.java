@@ -25,9 +25,6 @@ public class Event {
 	@Column (nullable = false)
 	String details;
 
-	@Column (nullable = false)
-	int creatorID;
-
 	@ManyToOne
 	User user;
 
@@ -69,14 +66,6 @@ public class Event {
 
 	public void setDetails(String details) {
 		this.details = details;
-	}
-
-	public int getCreatorID() {
-		return creatorID;
-	}
-
-	public void setCreatorID(int creatorID) {
-		this.creatorID = creatorID;
 	}
 
 	public User getUser() {
