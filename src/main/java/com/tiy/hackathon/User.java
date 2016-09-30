@@ -14,8 +14,11 @@ public class User {
 	@GeneratedValue
 	int id;
 
-	@Column (nullable = false)
+	@Column (nullable = false, unique = true)
 	String email;
+
+	@Column(nullable = false, unique = true)
+	String displayName;
 
 	@Column (nullable = false)
 	String password;
@@ -23,8 +26,9 @@ public class User {
 	@Column (nullable = false)
 	boolean isOffensive;
 
-	public User(String email, String password) {
+	public User(String email, String displayName, String password) {
 		this.email = email;
+		this.displayName = displayName;
 		this.password = password;
 		this.isOffensive = false;
 	}
@@ -63,5 +67,13 @@ public class User {
 
 	public void setOffensive(boolean offensive) {
 		isOffensive = offensive;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }
