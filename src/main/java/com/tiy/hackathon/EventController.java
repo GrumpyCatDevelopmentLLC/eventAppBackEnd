@@ -35,8 +35,8 @@ public class EventController {
 //		return "redirect:/";
 //	}
 //
-//	@RequestMapping(path = "/login", method = RequestMethod.POST)
-//	public String login(HttpSession session, String email, String password) throws Exception {
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
+	public String login(HttpSession session, String email, String password) throws Exception {
 //		User user = users.findFirstByEmail(email);
 //		if (user == null) {
 //			throw new Exception("User does not exist!");
@@ -44,8 +44,8 @@ public class EventController {
 //			throw new Exception("Password is incorrect");
 //		}
 //		session.setAttribute("user", user);
-//		return "redirect:/events";
-//	}
+		return "redirect:/events";
+	}
 
 	@RequestMapping(path = "/events", method = RequestMethod.GET)
 	public String events() {

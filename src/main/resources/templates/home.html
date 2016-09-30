@@ -8,14 +8,21 @@
 
 </head>
 <body ng-controller="EventController">
+<!--
+{{! changing the mustache delimiter so it doesn't conflict with  }}
+{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}
+{{=<% %>=}}
+-->
+
 
 
 <!-- multiple buttons for one form? -->
-<form action="/login" method="post">
-    <input type="text" placeholder="email" name="email"/>
-    <input type="password" placeholder="Password" name="password"/>
-    <button type="submit">Login</button>
-</form>
+<%^user%>
+<div>
+    <input type="text" placeholder="email" ng-model="email"/>
+    <input type="password" placeholder="Password" ng-model="password"/>
+    <input type="button" ng-click="login(email, password)" value="login"/>
+</div>
 
 <div>
     <input type="text" placeholder="email" ng-model="email"/>
@@ -23,6 +30,13 @@
     <input type="password" placeholder="Password" ng-model="password"/>
     <input type="button" ng-click="createUser(email, displayName, password)" value="Create User">
 </div>
+<%/user%>
 
+
+<%#user%>
+<div>
+    <input type="button" ng-click="logout()" value="logout"/>
+</div>
+<%/user%>
 </body>
 </html>
