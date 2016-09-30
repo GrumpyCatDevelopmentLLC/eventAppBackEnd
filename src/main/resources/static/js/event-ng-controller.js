@@ -23,7 +23,7 @@ angular.module('EventApp', [])
 
     $scope.login = function(email, password) {
         console.log("about to login");
-        $http.get("/login?email=" + email + "&password=" + password)
+        $http.post("/login.json?email=" + email + "&password=" + password)
         .then(
             function successCallBack (response) {
                 console.log(response.data);
