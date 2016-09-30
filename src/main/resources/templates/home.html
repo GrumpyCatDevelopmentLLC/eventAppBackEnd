@@ -14,11 +14,12 @@
     <button type="submit">Login</button>
 </form>
 
-<form action="/newUser" method="post">
-    <input type="text" placeholder="email" name="email"/>
-    <input type="password" placeholder="Password" name="password"/>
-    <button type="submit">Create New User</button>
-</form>
+<div>
+    <input type="text" placeholder="email" ng-model="newUser.email"/>
+    <input type="text" placeholder="displayName" ng-model="newUser.displayName"/>
+    <input type="password" placeholder="Password" ng-model="newUser.password"/>
+    <input type="button" ng-click="createUser()" value="Create User">
+</div>
 
 </body>
 </html>
