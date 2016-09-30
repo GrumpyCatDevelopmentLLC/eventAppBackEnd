@@ -111,9 +111,6 @@ public class EventJsonController {
     }
 
 
-
-
-
 //    @RequestMapping(path = "/myEvents", method = RequestMethod.POST)
 //    public ArrayList<Event> myEvents(HttpSession session) throws Exception{
 //

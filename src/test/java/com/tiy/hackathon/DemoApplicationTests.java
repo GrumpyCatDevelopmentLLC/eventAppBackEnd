@@ -79,9 +79,16 @@ public class DemoApplicationTests {
 
 		int eventID = testingEvent.getId();
 
-		Event retrievedEvent = events.findOne(eventID);
 
 
+
+
+
+//
+//		event.name = name;
+//		event.location = location;
+//		event.dateAndTime = dateAndTime;
+//		event.details = details;
 
 
 
