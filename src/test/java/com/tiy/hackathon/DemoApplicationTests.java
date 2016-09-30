@@ -29,23 +29,69 @@ public class DemoApplicationTests {
 
 	@Test
 	public void testCreateEvent() throws Exception {
+		Event testingEvent = new Event();
+
+		testingEvent.name = "Take the long way home";
+		testingEvent.location = "Jackson State";
+		testingEvent.dateAndTime = "11/27/2017 ~ 10:30 PM";
+		testingEvent.details= "A light hearted story of a girl and her pets.";
+
+		events.save(testingEvent);
+
+		int eventID = testingEvent.getId();
+
+		Event retrievedEvent = events.findOne(eventID);
+
+		assertEquals(testingEvent.id, retrievedEvent.id);
+
+		events.delete(testingEvent);
+	}
+
+	@Test
+	public void testCreateUser() throws Exception {
 		User tester = new User();
 
-		tester.email = "Unittester@gmail.com";
-		tester.displayName = "OMG Unit Tester";
+		tester.email = "guccimane@gmail.com";
+		tester.displayName = "Yellow Diamonds";
 		tester.password = "theBestTesterInTheWorld";
 
 		users.save(tester);
 
 		int userID = tester.getId();
 
-		
-		assertEquals();
+		User retrievedUser = users.findFirstByEmail("guccimane@gmail.com");
+
+		assertEquals(tester.id, retrievedUser.id);
+
+		users.delete(tester);
 	}
 
 	@Test
-	public void testCreateUser() throws Exception {
+	public void testEditEvent() throws Exception {
+		Event testingEvent = new Event();
 
+		testingEvent.name = "Don't Drown";
+		testingEvent.location = "Atlantis";
+		testingEvent.dateAndTime = "12/13/2016 ~ 4:00 AM";
+		testingEvent.details= "Exploration of the lost city";
+
+		events.save(testingEvent);
+
+		int eventID = testingEvent.getId();
+
+		Event retrievedEvent = events.findOne(eventID);
+
+
+
+
+
+
+
+
+
+
+
+		events.delete(testingEvent);
 	}
 
 	@Test
@@ -54,12 +100,7 @@ public class DemoApplicationTests {
 	}
 
 	@Test
-	public void testEditEvent() throws Exception {
-
-	}
-
-	@Test
-	public void testListForUsersAtEvent() throws Exception {
+	public void testListForUsersCheckedInAtEvent() throws Exception {
 
 	}
 
