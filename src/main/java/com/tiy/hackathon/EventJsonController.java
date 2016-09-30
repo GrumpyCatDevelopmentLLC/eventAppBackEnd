@@ -39,7 +39,7 @@ public class EventJsonController {
     }
 
 
-    @RequestMapping(path = "/login.json", method = RequestMethod.GET)
+    @RequestMapping(path = "/login.json", method = RequestMethod.POST)
     public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
         User user = users.findFirstByEmail(email);
         if (user == null) {
