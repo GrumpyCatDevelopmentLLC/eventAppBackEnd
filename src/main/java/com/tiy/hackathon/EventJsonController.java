@@ -25,7 +25,7 @@ public class EventJsonController {
     User user;
 
 
-    @RequestMapping(path = "/createAdmin", method = RequestMethod.GET)
+    @RequestMapping(path = "/createAdmin.json", method = RequestMethod.POST)
     public User adminUser(HttpSession session) throws Exception {
         User theAdmin = new User();
 
@@ -39,7 +39,7 @@ public class EventJsonController {
     }
 
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    @RequestMapping(path = "/login.json", method = RequestMethod.GET)
     public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
         User user = users.findFirstByEmail(email);
         if (user == null) {
@@ -53,13 +53,13 @@ public class EventJsonController {
         return getMyEvents();
     }
 
-    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    @RequestMapping(path = "/logout.json", method = RequestMethod.POST)
     public void logout(HttpSession session) {
         session.invalidate();
 //        return "redirect:/";
     }
 
-    @RequestMapping(path = "/createUser", method = RequestMethod.POST)
+    @RequestMapping(path = "/createUser.json", method = RequestMethod.POST)
     public User newUser(HttpSession session, String email, String displayName, String password) throws Exception{
         User user = users.findFirstByEmail(email);
         if (user == null) {
@@ -71,7 +71,7 @@ public class EventJsonController {
         return user;
     }
 
-    @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
+    @RequestMapping(path = "/createEvent.json", method = RequestMethod.POST)
     public ArrayList<Event> newEvent(HttpSession session, String name, String location, String dateAndTime, String details) throws Exception{
         User user = (User) session.getAttribute("user");
 
@@ -85,7 +85,7 @@ public class EventJsonController {
         return getMyEvents();
     }
 
-    @RequestMapping(path = "/saveEvent", method = RequestMethod.POST)
+    @RequestMapping(path = "/saveEvent.json", method = RequestMethod.POST)
     public ArrayList<Event> saveEvent(HttpSession session, String name, String location, String dateAndTime, String details) throws Exception{
         Event event = (Event) session.getAttribute("event");
 
@@ -100,7 +100,7 @@ public class EventJsonController {
         return getMyEvents();
     }
 
-    @RequestMapping(path = "/deleteEvent", method = RequestMethod.POST)
+    @RequestMapping(path = "/deleteEvent.json", method = RequestMethod.POST)
     public ArrayList<Event> deleteEvent(HttpSession session) throws Exception{
         Event event = (Event) session.getAttribute("event");
 
@@ -118,20 +118,20 @@ public class EventJsonController {
 //    }
 
 
-    @RequestMapping(path = "/allEvents", method = RequestMethod.POST)
+    @RequestMapping(path = "/allEvents.json", method = RequestMethod.POST)
     public ArrayList<Event> allEvents(HttpSession session) throws Exception{
 
         return getAllEvents();
     }
 
-    @RequestMapping(path= "/profile", method = RequestMethod.POST)
+    @RequestMapping(path= "/profile.json", method = RequestMethod.POST)
     public User thisUsersProfile(HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
 
         return (user);
     }
 
-    @RequestMapping(path= "/userInfo", method = RequestMethod.POST)
+    @RequestMapping(path= "/userInfo.json", method = RequestMethod.POST)
     public String clickedUser(HttpSession session, int userID) throws Exception {
         User findUser = users.findOne(userID);
 
@@ -162,7 +162,7 @@ public class EventJsonController {
         }
         return eventList;
     }
-//    @RequestMapping(path = "/myContacts", method = RequestMethod.POST)
+//    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
 //    public ArrayList<Contact> allFriends(HttpSession session) throws Exception{
 //    User user = (User) session.getAttribute("user");
 //        return getAllMyContacts();
