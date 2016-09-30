@@ -87,9 +87,9 @@ public class EventJsonController {
     }
 
     @RequestMapping(path= "/profile", method = RequestMethod.POST)
-    public ArrayList<User> thisUser(HttpSession session) throws Exception {
+    public User thisUser(HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
-        
+
         return (user);
     }
 
