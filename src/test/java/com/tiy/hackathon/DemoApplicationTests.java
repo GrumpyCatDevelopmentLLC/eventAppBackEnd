@@ -89,25 +89,25 @@ public class DemoApplicationTests {
 		events.save(retEvent);
 
 		assertEquals(testingEvent.id, retEvent.id);
-		System.out.println(testingEvent.name + retEvent.name);
+		System.out.println(testingEvent.name +" " + retEvent.name);
 
 
 		events.delete(testingEvent);
 	}
 
-	@Test
-	public void testCheckInForUser() throws Exception {
-
-	}
-
-	@Test
-	public void testListForUsersCheckedInAtEvent() throws Exception {
-
-	}
-
-	@Test
-	public void testGetMyFriends() throws Exception {
-
-	}
+//	@Test
+//	public void testCheckInForUser() throws Exception {
+//
+//	}
+//
+//	@Test
+//	public void testListForUsersCheckedInAtEvent() throws Exception {
+//
+//	}
+//
+//	@Test
+//	public void testGetMyFriends() throws Exception {
+//
+//	}
 
 }

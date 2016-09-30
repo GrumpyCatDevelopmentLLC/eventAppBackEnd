@@ -163,18 +163,18 @@ public class EventJsonController {
         return eventList;
     }
 //    @RequestMapping(path = "/myContacts", method = RequestMethod.POST)
-//    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
+//    public ArrayList<Contact> allFriends(HttpSession session) throws Exception{
 //    User user = (User) session.getAttribute("user");
 //        return getAllMyContacts();
 //    }
 //
 //
 //    ArrayList<Event> getAllMyContacts() {
-//        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
-//        Iterable<Contacts> allFriends = events.findAll(); //change this to a whatever we name our find friend by user
+//        ArrayList<Contact> friendList = new ArrayList<Contact>();
+//        Iterable<Contact> allFriends = events.findAll(); //change this to a whatever we name our find friend by user
 //
 //        if (user != null){
-//            for (Event currentFriend : allFriends) {
+//            for (Contact currentFriend : allFriends) {
 //                friendList.add(currentFriend);
 //            }
 //        }
