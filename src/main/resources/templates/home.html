@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="EventApp">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="js/event-ng-controller.js"></script>
+    <script src="../static/js/event-ng-controller.js"></script>
+
 </head>
-<body>
+<body ng-controller="EventController">
 
 
 <!-- multiple buttons for one form? -->
@@ -15,10 +18,10 @@
 </form>
 
 <div>
-    <input type="text" placeholder="email" ng-model="newUser.email"/>
-    <input type="text" placeholder="displayName" ng-model="newUser.displayName"/>
-    <input type="password" placeholder="Password" ng-model="newUser.password"/>
-    <input type="button" ng-click="createUser()" value="Create User">
+    <input type="text" placeholder="email" ng-model="email"/>
+    <input type="text" placeholder="displayName" ng-model="displayName"/>
+    <input type="password" placeholder="Password" ng-model="password"/>
+    <input type="button" ng-click="createUser(email, displayName, password)" value="Create User">
 </div>
 
 </body>
