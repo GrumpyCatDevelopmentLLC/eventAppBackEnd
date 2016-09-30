@@ -77,25 +77,19 @@ public class DemoApplicationTests {
 
 		events.save(testingEvent);
 
-		int eventID = testingEvent.getId();
+
+		Event retEvent = events.findOne(testingEvent.id);
 
 
+		retEvent.name = "Under the sea adventures";
+		retEvent.location = "Atlantis";
+		retEvent.dateAndTime = "12/13/2016 ~ 3:00 AM";
+		retEvent.details = "Exploration of the lost city";
 
+		events.save(retEvent);
 
-
-
-//
-//		event.name = name;
-//		event.location = location;
-//		event.dateAndTime = dateAndTime;
-//		event.details = details;
-
-
-
-
-
-
-
+		assertEquals(testingEvent.id, retEvent.id);
+		System.out.println(testingEvent.name + retEvent.name);
 
 
 		events.delete(testingEvent);
