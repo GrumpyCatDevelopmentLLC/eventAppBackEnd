@@ -24,7 +24,7 @@ public class EventJsonController {
         User user = users.findFirstByEmail(email);
         if (user == null) {
             throw new Exception("User does not exist or was input incorrectly");
-            return "redirect:/login";
+//            return "redirect:/login";
 
         } else if (!password.equals(user.getPassword())) {
             throw new Exception("Incorrect password");
@@ -40,10 +40,10 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/createUser", method = RequestMethod.POST)
-    public ArrayList<Event> newUser(HttpSession session, String userName, String password) throws Exception{ //should this be any al
+    public ArrayList<Event> newUser(HttpSession session, String email, String displayName, String password) throws Exception{ //should this be any al
         User user = users.findFirstByEmail(email);
         if (user == null) {
-            user = new User(userName, password);
+            user = new User(email, displayName, password);
             users.save(user);
         }
         session.setAttribute("user", user);
@@ -52,10 +52,10 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
-    public ArrayList<Event> newEvent(HttpSession session, String name, String location, String dateAndTime, String details ) throws Exception{
+    public ArrayList<Event> newEvent(HttpSession session, String name, String location, String dateAndTime, String details) throws Exception{
         User user = (User) session.getAttribute("user");
 
-        Event thisEvent = new Event(name, location, dateAndTime, detail);
+        Event thisEvent = new Event(name, location, dateAndTime, details);
         thisEvent.user = user;
 
 
@@ -80,9 +80,9 @@ public class EventJsonController {
 
     ArrayList<Event> getMyEvents() {
         ArrayList<Event> eventList = new ArrayList<Event>();
-        Iterable<Event> allEvents = events.findByEmail(email);
+        Iterable<Event> allEvents = users.findFirstByEmail(email);
 
-        if (user != null){
+        if (email != null){
             for (Event currentEvent : allEvents) {
                 eventList.add(currentEvent);
             }
@@ -94,7 +94,7 @@ public class EventJsonController {
         ArrayList<Event> eventList = new ArrayList<Event>();
         Iterable<Event> allEvents = events.findAll();
 
-        if (user != null){
+        if (email != null){
             for (Event currentEvent : allEvents) {
                 eventList.add(currentEvent);
             }
