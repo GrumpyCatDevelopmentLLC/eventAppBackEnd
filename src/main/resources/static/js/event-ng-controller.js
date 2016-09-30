@@ -7,7 +7,7 @@ angular.module('EventApp', [])
 
     $scope.createUser = function (email, displayName, password) {
         console.log("about to create user");
-        $http.post("/createUser?email=" + email + "&displayName=" + displayName + "&password=" + password)
+        $http.post("/createUser.json?email=" + email + "&displayName=" + displayName + "&password=" + password)
         .then(
             function successCallBack(response) {
                 console.log(response.data);
