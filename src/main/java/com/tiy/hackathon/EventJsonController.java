@@ -29,7 +29,7 @@ public class EventJsonController {
     public User adminUser(HttpSession session) throws Exception {
         User theAdmin = new User();
 
-//        theAdmin.id = 1;
+
         theAdmin.email = "Admin@gmail.com";
         theAdmin.displayName = "Admin";
         theAdmin.password = "admin";
@@ -40,7 +40,8 @@ public class EventJsonController {
 
 
     @RequestMapping(path = "/login.json", method = RequestMethod.POST)
-    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
+    public User login(HttpSession session, String email, String password) throws Exception {
+//    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
         User user = users.findFirstByEmail(email);
         if (user == null) {
             throw new Exception("User does not exist or was input incorrectly");
@@ -49,25 +50,27 @@ public class EventJsonController {
             throw new Exception("Incorrect password");
         }
         session.setAttribute("user", user);
-//        return "redirect:/myEvents";
-        return getMyEvents();
+
+//        return getMyEvents();
+//        return getAllEvents();
+        return user;
     }
 
     @RequestMapping(path = "/logout.json", method = RequestMethod.POST)
     public void logout(HttpSession session) {
         session.invalidate();
-//        return "redirect:/";
+
     }
 
     @RequestMapping(path = "/createUser.json", method = RequestMethod.POST)
     public User newUser(HttpSession session, String email, String displayName, String password) throws Exception{
+//        public ArrayList<Event> newUser(HttpSession session, String email, String displayName, String password) throws Exception{
         User user = users.findFirstByEmail(email);
         if (user == null) {
             user = new User(email, displayName, password);
             users.save(user);
         }
         session.setAttribute("user", user);
-//        return "redirect:/myEvents";
         return user;
     }
 
@@ -82,7 +85,8 @@ public class EventJsonController {
         System.out.println("My runtime repo: " + thisEvent.toString());
         events.save(thisEvent);
 
-        return getMyEvents();
+//        return getMyEvents();
+        return getAllEvents();
     }
 
     @RequestMapping(path = "/saveEvent.json", method = RequestMethod.POST)
@@ -97,7 +101,8 @@ public class EventJsonController {
         System.out.println("My runtime repo: " + event.toString());
         events.save(event);
 
-        return getMyEvents();
+//        return getMyEvents();
+        return getAllEvents();
     }
 
     @RequestMapping(path = "/deleteEvent.json", method = RequestMethod.POST)
@@ -107,7 +112,8 @@ public class EventJsonController {
         System.out.println("My runtime repo to delete event: " + event.toString());
         events.delete(event);
 
-        return getMyEvents();
+//        return getMyEvents();
+        return getAllEvents();
     }
 
 
