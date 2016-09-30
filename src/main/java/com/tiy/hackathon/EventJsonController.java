@@ -22,7 +22,7 @@ public class EventJsonController {
     User user;
 
 
-    @RequestMapping(path = "createAdmin", method = RequestMethod.POST)
+    @RequestMapping(path = "/createAdmin", method = RequestMethod.POST)
     public User adminUser(HttpSession session) throws Exception {
         User theAdmin = new User();
 
