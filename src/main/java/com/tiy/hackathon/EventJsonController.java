@@ -45,23 +45,37 @@ public class EventJsonController {
         return theAdmin;
     }
 
-
     @RequestMapping(path = "/login.json", method = RequestMethod.POST)
     public User login(HttpSession session, @RequestBody User user) throws Exception {
 //    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
-        user = users.findFirstByEmail(user.email);
-        if (user == null) {
+        User newUser = users.findFirstByEmail(user.email);
+        if (newUser == null) {
             throw new Exception("User does not exist or was input incorrectly");
-
         } else if (!user.password.equals(user.getPassword())) {
             throw new Exception("Incorrect password");
         }
-        session.setAttribute("user", user);
-
+        session.setAttribute("user", newUser);
 //        return getMyEvents();
 //        return getAllEvents();
-        return user;
+        return newUser;
     }
+
+//    @RequestMapping(path = "/login.json", method = RequestMethod.POST)
+//    public User login(HttpSession session, @RequestBody User user) throws Exception {
+////    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
+//        user = users.findFirstByEmail(user.email);
+//        if (user == null) {
+//            throw new Exception("User does not exist or was input incorrectly");
+//
+//        } else if (!user.password.equals(user.getPassword())) {
+//            throw new Exception("Incorrect password");
+//        }
+//        session.setAttribute("user", user);
+//
+////        return getMyEvents();
+////        return getAllEvents();
+//        return user;
+//    }
 
     @RequestMapping(path = "/logout.json", method = RequestMethod.POST)
     public void logout(HttpSession session) {
