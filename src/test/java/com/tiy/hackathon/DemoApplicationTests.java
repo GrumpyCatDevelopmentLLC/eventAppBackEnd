@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -23,6 +25,8 @@ public class DemoApplicationTests {
 //    @Autowired
 //     ContactRepository contacts;
 
+	@Autowired
+	AttendingEventsRepository attendingEvents;
 
 	@Test
 	public void contextLoads() {
@@ -87,7 +91,41 @@ public class DemoApplicationTests {
 			assertTrue(thrown);
 	}
 
+	@Test
+	public void testEnteringAnEmptyFieldForEvent() throws Exception {
+		boolean thrown = false;
+		try {
+			User tester = new User();
 
+			tester.email = "Admin@gmail.com";
+			tester.displayName = "Admin";
+			tester.password = "admin";
+
+			users.save(tester);
+
+		} catch (DataIntegrityViolationException exception) {
+			thrown = true;
+		}
+		assertTrue(thrown);
+	}
+
+	@Test
+	public void testEnteringAnEmptyFieldForUser() throws Exception {
+		boolean thrown = false;
+		try {
+			User tester = new User();
+
+			tester.email = null;
+			tester.displayName = "Admin";
+			tester.password = "admin";
+
+			users.save(tester);
+
+		} catch (DataIntegrityViolationException exception) {
+			thrown = true;
+		}
+		assertTrue(thrown);
+	}
 	@Test
 	public void testEditEvent() throws Exception {
 		Event testingEvent = new Event();
@@ -115,55 +153,54 @@ public class DemoApplicationTests {
 
 		events.delete(testingEvent);
 	}
-//
-//	@Test
-//	public void testCheckInForUser() throws Exception {
-//		Event testingEvent = new Event();
-//		User tada = new User();
-//
-//		testingEvent.name = "A reason for Celebration";
-//		testingEvent.location = "Trading Places";
-//		testingEvent.dateAndTime = "1/2/1989 ~ 5:55 PM";
-//		testingEvent.details= "Perry's 50th Birthday";
-//
-//		events.save(testingEvent);
-//
-//		tada.email = "tada@gmail.com";
-//		tada.displayName = "Baow!";
-//		tada.password = "herpderp";
-//
-//
-//
-//
-//		int eventID = testingEvent.getId();
-//
-//		Event retrievedEvent = events.findOne(eventID);
-//
-//		assertEquals(testingEvent.id, retrievedEvent.id);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//		events.delete(testingEvent);
-//	}
-//
-//	@Test
+
+	@Test
+	public void testCheckInForUser() throws Exception {
+		Event testingEvent = new Event();
+		User tb = new User();
+
+		testingEvent.name = "Bey & Jay-z";
+		testingEvent.location = "Philps Arena";
+		testingEvent.dateAndTime = "6/25/2019 ~ 1:00 PM";
+		testingEvent.details= "Sign ups";
+
+		events.save(testingEvent);
+
+		tb.email = "working?@gmail.com";
+		tb.displayName = "Halp maaaa";
+		tb.password = "yoquierotacobell";
+		users.save(tb);
+
+		AttendingEvents testEvent = new AttendingEvents(testingEvent, tb);
+
+		attendingEvents.save(testEvent);
+
+
+		Iterable<AttendingEvents> eventsFound = attendingEvents.findUsersByEvent(testingEvent);
+
+		ArrayList<AttendingEvents> eventList = new ArrayList<AttendingEvents>();
+		for (AttendingEvents currentEvent : eventsFound) {
+				eventList.add(currentEvent);
+			}
+
+		AttendingEvents thisEvent = attendingEvents.findOne(testEvent.id);
+
+		assertEquals(tb.email, eventList.get(0).user.email);
+
+		attendingEvents.delete(testEvent);
+		events.delete(testingEvent);
+		users.delete(tb);
+	}
+
+//	@Test //do we need this test????
 //	public void testListForUsersCheckedInAtEvent() throws Exception {
 //
 //	}
 //
-//	@Test
-//	public void testRequestUserInfo() throws Exception {
-//
-//	}
+	@Test
+	public void testRequestUserInfo() throws Exception {
+
+	}
 //
 //	@Test
 //	public void testRequestUserInfoAccept() throws Exception {
