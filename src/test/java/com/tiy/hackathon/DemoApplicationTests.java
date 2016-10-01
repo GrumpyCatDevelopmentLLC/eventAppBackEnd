@@ -4,9 +4,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringRunner.class)
@@ -65,6 +67,26 @@ public class DemoApplicationTests {
 
 		users.delete(tester);
 	}
+
+
+	@Test
+	public void testCreateUserThatAlreadyExists() throws Exception {
+		boolean thrown = false;
+		try {
+			User tester = new User();
+
+			tester.email = "Admin@gmail.com";
+			tester.displayName = "Admin";
+			tester.password = "admin";
+
+			users.save(tester);
+
+		} catch (DataIntegrityViolationException exception) {
+			thrown = true;
+		}
+			assertTrue(thrown);
+	}
+
 
 	@Test
 	public void testEditEvent() throws Exception {
