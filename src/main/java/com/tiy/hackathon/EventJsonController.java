@@ -238,5 +238,15 @@ public class EventJsonController {
         return attendeeList;
     }
 
+    @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
+    public ArrayList<User> checkInAtEvent(HttpSession session) throws Exception{
+        User user = (User) session.getAttribute("user");
+        Event event = (Event) session.getAttribute("event");
+
+        attendingEvents.save
+        
+
+        return getAllAttendees();
+    }
 
 }
