@@ -42,13 +42,13 @@ public class EventJsonController {
 
 
     @RequestMapping(path = "/login.json", method = RequestMethod.POST)
-    public User login(HttpSession session, String email, String password) throws Exception {
+    public User login(HttpSession session, @RequestBody User user) throws Exception {
 //    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
-        User user = users.findFirstByEmail(email);
+        user = users.findFirstByEmail(user.email);
         if (user == null) {
             throw new Exception("User does not exist or was input incorrectly");
 
-        } else if (!password.equals(user.getPassword())) {
+        } else if (!user.password.equals(user.getPassword())) {
             throw new Exception("Incorrect password");
         }
         session.setAttribute("user", user);
