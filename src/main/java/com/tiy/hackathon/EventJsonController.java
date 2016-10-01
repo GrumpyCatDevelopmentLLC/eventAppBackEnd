@@ -243,10 +243,13 @@ public class EventJsonController {
         User user = (User) session.getAttribute("user");
         Event event = (Event) session.getAttribute("event");
 
-        attendingEvents.save
-        
+        AttendingEvents aEvent = new AttendingEvents(event, user);
+
+        attendingEvents.save(aEvent);
 
         return getAllAttendees();
     }
 
+
+    
 }
