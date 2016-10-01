@@ -46,20 +46,21 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/login.json", method = RequestMethod.POST)
-    public ResponseContainer login(HttpSession session, @RequestBody User user) throws Exception {
-    	ResponseContainer myResponse = new ResponseContainer();
+    public UserResponseContainer login(HttpSession session, @RequestBody User user) throws Exception {
+    	UserResponseContainer myResponse = new UserResponseContainer();
 //    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
         User newUser = users.findFirstByEmail(user.email);
         if (newUser == null) {
             myResponse.errorMessage = "User does not exist or was input incorrectly";
-        } else if (!user.password.equals(user.getPassword())) {
+        } else if (!user.password.equals(newUser.getPassword())) {
             myResponse.errorMessage = "Incorrect password";
-        }
-		System.out.println(user.email + " is logging in");
-		session.setAttribute("user", newUser);
+        } else if(newUser != null && newUser.password.equals(newUser.getPassword())) {
+			System.out.println(user.email + " is logging in");
+			session.setAttribute("user", newUser);
 //        return getMyEvents();
 //        return getAllEvents();
-        myResponse.responseUser = newUser;
+			myResponse.responseUser = newUser;
+		}
 		return myResponse;
     }
 
@@ -87,9 +88,9 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/createUser.json", method = RequestMethod.POST)
-    public ResponseContainer newUser(HttpSession session, @RequestBody User user) throws Exception{
+    public UserResponseContainer newUser(HttpSession session, @RequestBody User user) throws Exception{
 //        public ArrayList<Event> newUser(HttpSession session, String email, String displayName, String password) throws Exception{
-		ResponseContainer myResponse = new ResponseContainer();
+		UserResponseContainer myResponse = new UserResponseContainer();
         User newUser = users.findFirstByEmail(user.email);
 		System.out.println(user.email + " is trying to get created");
 		if (newUser == null) {
@@ -97,8 +98,10 @@ public class EventJsonController {
 			System.out.println("Creating user with username: " + user.email + " display name: " + user.displayName + " and password: " + user.password + ".");
 			users.save(user);
 			myResponse.responseUser = user;
-        }
-        session.setAttribute("user", user);
+			session.setAttribute("user", user);
+		} else {
+			myResponse.errorMessage = "User already exists";
+		}
         return myResponse;
     }
 
