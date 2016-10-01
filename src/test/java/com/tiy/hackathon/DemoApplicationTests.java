@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -22,8 +23,8 @@ public class DemoApplicationTests {
 	@Autowired
 	UserRepository users;
 
-//    @Autowired
-//     ContactRepository contacts;
+    @Autowired
+	ContactsRepository contacts;
 
 	@Autowired
 	AttendingEventsRepository attendingEvents;
@@ -198,18 +199,112 @@ public class DemoApplicationTests {
 //	}
 //
 	@Test
-	public void testRequestUserInfo() throws Exception {
+	public void testRequestUserInfoAccept() throws Exception {
+		User userIntiatiated = new User();
+		User userContacted = new User();
+
+		userIntiatiated.email = "hbemd@gmail.com";
+		userIntiatiated.displayName = "dehmpc";
+		userIntiatiated.password = "jb";
+		users.save(userIntiatiated);
+
+		userContacted.email = "trmebtsd@gmail.com";
+		userContacted.displayName = "degd3br";
+		userContacted.password = "chibbs";
+		users.save(userContacted);
+
+
+		Contacts testContact = new Contacts(userIntiatiated, userContacted);
+		testContact.giveInfo = true;
+		contacts.save(testContact);
+
+		Iterable <Contacts> contactsFound =  contacts.findByInitialContact(userIntiatiated);
+		ArrayList<Contacts> contactsList = new ArrayList<Contacts>();
+		for(Contacts contact: contactsFound) {
+			contactsList.add(contact);
+		}
+
+		Contacts thisContact = contacts.findOne(testContact.id);
+
+		assertTrue(thisContact.giveInfo);
+
+
+		contacts.delete(testContact);
+		users.delete(userIntiatiated);
+		users.delete(userContacted);
 
 	}
-//
-//	@Test
-//	public void testRequestUserInfoAccept() throws Exception {
-//
-//	}
-//
-// 	@Test
-//	public void testRequestUserInfoReject() throws Exception {
-//
-//	}
-//
+
+	@Test
+	public void testRequestUserInfoReject() throws Exception {
+		User userIntiatiated = new User();
+		User userContacted = new User();
+
+		userIntiatiated.email = "binrads@gmail.com";
+		userIntiatiated.displayName = "poppers";
+		userIntiatiated.password = "jb";
+		users.save(userIntiatiated);
+
+		userContacted.email = "shdbow@gmail.com";
+		userContacted.displayName = "spizzar";
+		userContacted.password = "chibbs";
+		users.save(userContacted);
+
+
+		Contacts testContact = new Contacts(userIntiatiated, userContacted);
+		testContact.giveInfo = false;
+		contacts.save(testContact);
+
+		Iterable <Contacts> contactsFound =  contacts.findByInitialContact(userIntiatiated);
+		ArrayList<Contacts> contactsList = new ArrayList<Contacts>();
+		for(Contacts contact: contactsFound) {
+			contactsList.add(contact);
+		}
+
+		Contacts thisContact = contacts.findOne(testContact.id);
+
+		assertFalse(thisContact.giveInfo);
+
+
+		contacts.delete(testContact);
+		users.delete(userIntiatiated);
+		users.delete(userContacted);
+	}
+
+ 	@Test
+	public void testRequestUserInfo() throws Exception {
+		User userIntiatiated = new User();
+		User userContacted = new User();
+
+		userIntiatiated.email = "testermc@gmail.com";
+		userIntiatiated.displayName = "testy";
+		userIntiatiated.password = "geez";
+		users.save(userIntiatiated);
+
+		userContacted.email = "iyao@gmail.com";
+		userContacted.displayName = "gah";
+		userContacted.password = "usthesedays";
+		users.save(userContacted);
+
+
+		Contacts testContact = new Contacts(userIntiatiated, userContacted);
+//		ensuring it auto sets boolean to false
+		contacts.save(testContact);
+
+		Iterable <Contacts> contactsFound =  contacts.findByInitialContact(userIntiatiated);
+		ArrayList<Contacts> contactsList = new ArrayList<Contacts>();
+		for(Contacts contact: contactsFound) {
+			contactsList.add(contact);
+		}
+
+		Contacts thisContact = contacts.findOne(testContact.id);
+
+		assertFalse(thisContact.giveInfo);
+
+
+		contacts.delete(testContact);
+		users.delete(userIntiatiated);
+		users.delete(userContacted);
+	}
+
 }
