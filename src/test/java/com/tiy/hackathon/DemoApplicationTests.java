@@ -98,6 +98,7 @@ public class DemoApplicationTests {
 	@Test
 	public void testCheckInForUser() throws Exception {
 		Event testingEvent = new Event();
+		User tada = new User();
 
 		testingEvent.name = "A reason for Celebration";
 		testingEvent.location = "Trading Places";
@@ -106,11 +107,29 @@ public class DemoApplicationTests {
 
 		events.save(testingEvent);
 
+		tada.email = "tada@gmail.com";
+		tada.displayName = "Baow!";
+		tada.password = "herpderp";
+
+
+
+		
 		int eventID = testingEvent.getId();
 
 		Event retrievedEvent = events.findOne(eventID);
 
 		assertEquals(testingEvent.id, retrievedEvent.id);
+
+
+
+
+
+
+
+
+
+
+
 
 		events.delete(testingEvent);
 	}
