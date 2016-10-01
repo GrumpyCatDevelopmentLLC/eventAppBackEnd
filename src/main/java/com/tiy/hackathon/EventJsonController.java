@@ -220,34 +220,34 @@ public class EventJsonController {
 //        return friendList;
 //    }
 
-    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
-    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
+//    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)//commented out while trying to work on test
+//    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
+////        User user = (User) session.getAttribute("user");
+//        Event event = (Event) session.getAttribute("event");
+//        return getAllAttendees();
+//    }
+
+//    ArrayList<User> getAllAttendees() { //commented out while trying to complete the tests
+//        ArrayList<User> attendeeList = new ArrayList<User>();
+//        Iterable<User> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
+//        if (user != null){
+//            for (User currentUser : allUsersAtEvent) {
+//                attendeeList.add(currentUser);
+//            }
+//        }
+//        return attendeeList;
+//    }
+
+//    @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST) //commented out while trying to get the test
+//    public ArrayList<User> checkInAtEvent(HttpSession session) throws Exception{
 //        User user = (User) session.getAttribute("user");
-        Event event = (Event) session.getAttribute("event");
-        return getAllAttendees();
-    }
-
-    ArrayList<User> getAllAttendees() {
-        ArrayList<User> attendeeList = new ArrayList<User>();
-        Iterable<User> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
-        if (user != null){
-            for (User currentUser : allUsersAtEvent) {
-                attendeeList.add(currentUser);
-            }
-        }
-        return attendeeList;
-    }
-
-    @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
-    public ArrayList<User> checkInAtEvent(HttpSession session) throws Exception{
-        User user = (User) session.getAttribute("user");
-        Event event = (Event) session.getAttribute("event");
-
-        AttendingEvents aEvent = new AttendingEvents(event, user);
-
-        attendingEvents.save(aEvent);
-
-        return getAllAttendees();
-    }
+//        Event event = (Event) session.getAttribute("event");
+//
+//        AttendingEvents aEvent = new AttendingEvents(event, user);
+//
+//        attendingEvents.save(aEvent);
+//
+//        return getAllAttendees();
+//    }
 
 }

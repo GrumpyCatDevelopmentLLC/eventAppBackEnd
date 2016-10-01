@@ -154,50 +154,45 @@ public class DemoApplicationTests {
 		events.delete(testingEvent);
 	}
 
-//	@Test
-//	public void testCheckInForUser() throws Exception {
-//		Event testingEvent = new Event();
-//		User tb = new User();
-//
-//		testingEvent.name = "hackathon";
-//		testingEvent.location = "Philps Arena";
-//		testingEvent.dateAndTime = "6/20/2019 ~ 1:00 PM";
-//		testingEvent.details= "Kill me";
-//
-//		events.save(testingEvent);
-//
-//		tb.email = "tb@gmail.com";
-//		tb.displayName = "Mexican Pizza";
-//		tb.password = "yoquierotacobell";
-//		users.save(tb);
-//
-//		AttendingEvents testEvent = new AttendingEvents(testingEvent, tb);
-//
-//		attendingEvents.save(testEvent);
-//
-//
-//		Iterable<User> usersFound = attendingEvents.findUsersByEvent(testingEvent);
-//		ArrayList<User> attendeeList = new ArrayList<User>();
-////		Iterable<User> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
-//			for (User currentUser : usersFound) {
-//				attendeeList.add(currentUser);
-//			}
-//
-//		User userFromList = attendeeList.get(0);
-//
-//
-////		assertEquals(tb.email, attendeeList.get(0).email);
-//
-//		Event thisEvent = attendingEvents.findOne(testEvent.id);
-//
-//
-//
-//
-//		events.delete(testingEvent);
-//		users.delete(tb);
-//	}
-//
-//	@Test
+	@Test
+	public void testCheckInForUser() throws Exception {
+		Event testingEvent = new Event();
+		User tb = new User();
+
+		testingEvent.name = "Bey & Jay-z";
+		testingEvent.location = "Philps Arena";
+		testingEvent.dateAndTime = "6/25/2019 ~ 1:00 PM";
+		testingEvent.details= "Sign ups";
+
+		events.save(testingEvent);
+
+		tb.email = "working?@gmail.com";
+		tb.displayName = "Halp maaaa";
+		tb.password = "yoquierotacobell";
+		users.save(tb);
+
+		AttendingEvents testEvent = new AttendingEvents(testingEvent, tb);
+
+		attendingEvents.save(testEvent);
+
+
+		Iterable<AttendingEvents> eventsFound = attendingEvents.findUsersByEvent(testingEvent);
+
+		ArrayList<AttendingEvents> eventList = new ArrayList<AttendingEvents>();
+		for (AttendingEvents currentEvent : eventsFound) {
+				eventList.add(currentEvent);
+			}
+
+		AttendingEvents thisEvent = attendingEvents.findOne(testEvent.id);
+
+		assertEquals(tb.email, eventList.get(0).user.email);
+
+		attendingEvents.delete(testEvent);
+		events.delete(testingEvent);
+		users.delete(tb);
+	}
+
+//	@Test //do we need this test????
 //	public void testListForUsersCheckedInAtEvent() throws Exception {
 //
 //	}
