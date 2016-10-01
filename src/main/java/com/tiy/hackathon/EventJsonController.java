@@ -20,8 +20,11 @@ public class EventJsonController {
     @Autowired
      UserRepository users;
 
-//    @Autowired
-//     ContactRepository contacts;
+    @Autowired
+     ContactsRepository contacts;
+
+    @Autowired
+     AttendingEventsRepository attentingEvents;
 
 
 
@@ -183,23 +186,26 @@ public class EventJsonController {
 
         return myUsers;
     }
-//    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
-//    public ArrayList<Contact> allFriends(HttpSession session) throws Exception{
-//    User user = (User) session.getAttribute("user");
-//        return getAllMyContacts();
-//    }
-//
-//
-//    ArrayList<Event> getAllMyContacts() {
-//        ArrayList<Contact> friendList = new ArrayList<Contact>();
-//        Iterable<Contact> allFriends = events.findAll(); //change this to a whatever we name our find friend by user
-//
-//        if (user != null){
-//            for (Contact currentFriend : allFriends) {
-//                friendList.add(currentFriend);
-//            }
-//        }
-//        return friendList;
-//    }
+    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
+    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
+    User user = (User) session.getAttribute("user");
+        return getAllMyContacts();
+    }
+
+
+    ArrayList<Contacts> getAllMyContacts() {
+        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+        Iterable<Contacts> allContacts = contacts.findByUser(user);
+
+        if (user != null){
+            for (Contacts currentFriend : allContacts) {
+                friendList.add(currentFriend);
+            }
+        }
+        return friendList;
+    }
+
+
+
 
 }
