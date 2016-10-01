@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bearden-tellez on 9/29/16.
@@ -67,9 +68,9 @@ public class EventJsonController {
     @RequestMapping(path = "/createUser.json", method = RequestMethod.POST)
     public User newUser(HttpSession session, @RequestBody User user) throws Exception{
 //        public ArrayList<Event> newUser(HttpSession session, String email, String displayName, String password) throws Exception{
-         user = users.findFirstByEmail(user.email);
-        if (user == null) {
-            user = new User(user.email, user.displayName,user.password);
+        User newUser = users.findFirstByEmail(user.email);
+        if (newUser == null) {
+            user = new User(user.email, user.displayName, user.password);
             users.save(user);
         }
         session.setAttribute("user", user);
@@ -169,6 +170,18 @@ public class EventJsonController {
             }
         }
         return eventList;
+    }
+
+    @RequestMapping(path = "/allUsers.json", method = RequestMethod.GET)
+    public List<User> allUsers() {
+        Iterable<User> userIterable = users.findAll();
+        ArrayList<User> myUsers = new ArrayList<>();
+
+        for (User myUser : userIterable) {
+            myUsers.add(myUser);
+        }
+
+        return myUsers;
     }
 //    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
 //    public ArrayList<Contact> allFriends(HttpSession session) throws Exception{

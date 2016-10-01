@@ -1,18 +1,18 @@
 angular.module('EventApp', [])
     .controller('EventController', function($scope, $http) {
 
-    $scope.newUser = {};
+    $scope.user = {};
 
-    $scope.user;
+    $scope.myUser;
 
-    $scope.createUser = function (email, displayName, password) {
+    $scope.createUser = function () {
         console.log("about to create user");
-        $http.post("/createUser.json?email=" + email + "&displayName=" + displayName + "&password=" + password)
+        $http.post("/createUser.json", $scope.user)
         .then(
             function successCallBack(response) {
                 console.log(response.data);
                 console.log("Adding data to scope...");
-                $scope.user = response.data;
+                $scope.myUser = response.data;
 
             },
             function errorCallBack(response) {
@@ -28,7 +28,7 @@ angular.module('EventApp', [])
             function successCallBack (response) {
                 console.log(response.data);
                 console.log("logging in...");
-                $scope.user = response.data;
+                $scope.myUser = response.data;
             },
             function errorCallBack (response){
                 console.log("unable to login")
