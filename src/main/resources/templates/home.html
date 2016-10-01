@@ -19,9 +19,9 @@
 <!-- multiple buttons for one form? -->
 <%^user%>
 <div>
-    <input type="text" placeholder="email" ng-model="email"/>
-    <input type="password" placeholder="Password" ng-model="password"/>
-    <input type="button" ng-click="login(email, password)" value="login"/>
+    <input type="text" placeholder="email" ng-model="loginUser.email"/>
+    <input type="password" placeholder="Password" ng-model="loginUser.password"/>
+    <input type="button" ng-click="login()" value="login"/>
 </div>
 
 <div>
