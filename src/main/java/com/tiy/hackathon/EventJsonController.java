@@ -106,8 +106,9 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/createEvent.json", method = RequestMethod.POST)
-    public ArrayList<Event> newEvent(HttpSession session, @RequestBody Event thisEvent) throws Exception{
+    public EventResponseContainer newEvent(HttpSession session, @RequestBody Event thisEvent) throws Exception{
         User user = (User) session.getAttribute("user");
+		EventResponseContainer myResponse = new EventResponseContainer();
 
         thisEvent = new Event(thisEvent.name, thisEvent.location, thisEvent.dateAndTime, thisEvent.details);
 //        thisEvent.user = user;
@@ -116,8 +117,16 @@ public class EventJsonController {
         System.out.println("My runtime repo: " + thisEvent.toString());
         events.save(thisEvent);
 
+		System.out.println("Creating event");
+
 //        return getMyEvents();
-        return getAllEvents();
+        ArrayList<Event> myEvents = getAllEvents();
+		for (Event myEvent : myEvents) {
+			myResponse.responseEventContainer.add(myEvent);
+			System.out.println("adding to the array list...");
+		}
+		System.out.println("Returning list of events");
+		return myResponse;
     }
 
     @RequestMapping(path = "/saveEvent.json", method = RequestMethod.POST)
@@ -156,9 +165,15 @@ public class EventJsonController {
 
 
     @RequestMapping(path = "/allEvents.json", method = RequestMethod.POST)
-    public ArrayList<Event> allEvents(HttpSession session) throws Exception{
+    public EventResponseContainer allEvents(HttpSession session) throws Exception{
+		EventResponseContainer myResponse = new EventResponseContainer();
 
-        return getAllEvents();
+        ArrayList<Event> myEvents = getAllEvents();
+		for (Event myEvent : myEvents) {
+			myResponse.responseEventContainer.add(myEvent);
+		}
+		System.out.println("returning list of events");
+		return myResponse;
     }
 
     @RequestMapping(path= "/profile.json", method = RequestMethod.POST)
@@ -192,10 +207,9 @@ public class EventJsonController {
         ArrayList<Event> eventList = new ArrayList<Event>();
         Iterable<Event> allEvents = events.findAll();
 
-        if (user != null){
             for (Event currentEvent : allEvents) {
                 eventList.add(currentEvent);
-            }
+
         }
         return eventList;
     }
