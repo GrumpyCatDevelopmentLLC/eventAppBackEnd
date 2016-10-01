@@ -105,9 +105,6 @@ public class DemoApplicationTests {
 //
 //	}
 //
-//	@Test
-//	public void testGetMyFriends() throws Exception {
-//
-//	}
+
 
 }
