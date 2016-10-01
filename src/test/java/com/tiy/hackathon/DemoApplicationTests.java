@@ -97,7 +97,41 @@ public class DemoApplicationTests {
 
 //	@Test
 //	public void testCheckInForUser() throws Exception {
+//		Event testingEvent = new Event();
+//		User tada = new User();
 //
+//		testingEvent.name = "A reason for Celebration";
+//		testingEvent.location = "Trading Places";
+//		testingEvent.dateAndTime = "1/2/1989 ~ 5:55 PM";
+//		testingEvent.details= "";
+//
+//		events.save(testingEvent);
+//
+//		tada.email = "tada@gmail.com";
+//		tada.displayName = "Baow!";
+//		tada.password = "herpderp";
+//
+//
+//
+//
+//		int eventID = testingEvent.getId();
+//
+//		Event retrievedEvent = events.findOne(eventID);
+//
+//		assertEquals(testingEvent.id, retrievedEvent.id);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//		events.delete(testingEvent);
 //	}
 //
 //	@Test
@@ -105,6 +139,19 @@ public class DemoApplicationTests {
 //
 //	}
 //
-
-
+//	@Test
+//	public void testRequestUserInfo() throws Exception {
+//
+//	}
+//
+//	@Test
+//	public void testRequestUserInfoAccept() throws Exception {
+//
+//	}
+//
+// 	@Test
+//	public void testRequestUserInfoReject() throws Exception {
+//
+//	}
+//
 }
