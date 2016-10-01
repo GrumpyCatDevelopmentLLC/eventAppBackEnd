@@ -9,5 +9,5 @@ import java.util.List;
  * Created by bearden-tellez on 10/1/16.
  */
 public interface ContactsRepository extends CrudRepository<User, Integer> {
-    List<Contacts> findByUser(User user);
+   ArrayList<Contacts> findByUser(User user);
 }

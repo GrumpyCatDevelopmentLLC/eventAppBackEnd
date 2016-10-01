@@ -24,11 +24,12 @@ public class EventJsonController {
      ContactsRepository contacts;
 
     @Autowired
-     AttendingEventsRepository attentingEvents;
+     AttendingEventsRepository attendingEvents;
 
 
 
     User user;
+    Event event;
 
 
     @RequestMapping(path = "/createAdmin.json", method = RequestMethod.POST)
@@ -203,6 +204,24 @@ public class EventJsonController {
             }
         }
         return friendList;
+    }
+
+    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
+    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
+//        User user = (User) session.getAttribute("user");
+        Event event = (Event) session.getAttribute("event");
+        return getAllAttendees();
+    }
+
+    ArrayList<User> getAllAttendees() {
+        ArrayList<User> attendeeList = new ArrayList<User>();
+        Iterable<User> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
+        if (user != null){
+            for (User currentUser : allUsersAtEvent) {
+                attendeeList.add(currentUser);
+            }
+        }
+        return attendeeList;
     }
 
 
