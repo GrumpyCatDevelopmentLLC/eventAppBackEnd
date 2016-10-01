@@ -25,6 +25,7 @@ angular.module('EventApp', [])
 
     $scope.login = function() {
         console.log("about to login");
+        console.log(JSON.stringify($scope.loginUser));
         $http.post("/login.json", $scope.loginUser)
         .then(
             function successCallBack (response) {
