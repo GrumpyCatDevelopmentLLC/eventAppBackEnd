@@ -2,10 +2,10 @@ angular.module('EventApp', [])
     .controller('EventController', function($scope, $http) {
 
     $scope.user = {};
-
+    $scope.myEvent = {};
     $scope.loginUser = {};
-
     $scope.myUser;
+    $scope.createdEvent;
 
     $scope.createUser = function () {
         console.log("about to create user");
@@ -38,6 +38,23 @@ angular.module('EventApp', [])
                 console.log("unable to login")
             });
          console.log("done with the callback")
+    };
+
+    $scope.newEvent = function() {
+        console.log("Going to try to create an event");
+        console.log("Creating event" + JSON.stringify($scope.myEvent));
+        $http.post("createEvent.json", $scope.myEvent)
+        .then (
+            function successCallBack(response) {
+                console.log(response.data);
+                console.log("creating new event, please wait...");
+                $scope.createdEvent = response.data;
+                $scope.myEvent = {};
+            },
+            function errorCallBack(response) {
+                console.log("unable to create event");
+            });
+         console.log("Done with the callback");
     };
 
 //    $scope.logout = function() {
