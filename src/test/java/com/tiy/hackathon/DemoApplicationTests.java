@@ -4,9 +4,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringRunner.class)
@@ -66,6 +68,26 @@ public class DemoApplicationTests {
 		users.delete(tester);
 	}
 
+
+	@Test
+	public void testCreateUserThatAlreadyExists() throws Exception {
+		boolean thrown = false;
+		try {
+			User tester = new User();
+
+			tester.email = "Admin@gmail.com";
+			tester.displayName = "Admin";
+			tester.password = "admin";
+
+			users.save(tester);
+
+		} catch (DataIntegrityViolationException exception) {
+			thrown = true;
+		}
+			assertTrue(thrown);
+	}
+
+
 	@Test
 	public void testEditEvent() throws Exception {
 		Event testingEvent = new Event();
@@ -91,10 +113,9 @@ public class DemoApplicationTests {
 		assertEquals(testingEvent.id, retEvent.id);
 		System.out.println(testingEvent.name +" " + retEvent.name);
 
-
 		events.delete(testingEvent);
 	}
-
+//
 //	@Test
 //	public void testCheckInForUser() throws Exception {
 //		Event testingEvent = new Event();
@@ -103,7 +124,7 @@ public class DemoApplicationTests {
 //		testingEvent.name = "A reason for Celebration";
 //		testingEvent.location = "Trading Places";
 //		testingEvent.dateAndTime = "1/2/1989 ~ 5:55 PM";
-//		testingEvent.details= "";
+//		testingEvent.details= "Perry's 50th Birthday";
 //
 //		events.save(testingEvent);
 //

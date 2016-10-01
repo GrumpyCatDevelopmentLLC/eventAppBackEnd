@@ -250,6 +250,4 @@ public class EventJsonController {
         return getAllAttendees();
     }
 
-
-
 }
