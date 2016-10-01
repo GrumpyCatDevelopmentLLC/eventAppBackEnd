@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ContactsRepository extends CrudRepository<Contacts, Integer> {
 //   ArrayList<Contacts> findByUser(User user);
+   ArrayList<Contacts> findByInitialContact(User user);
 }
