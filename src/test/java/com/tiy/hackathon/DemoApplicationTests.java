@@ -95,16 +95,44 @@ public class DemoApplicationTests {
 		events.delete(testingEvent);
 	}
 
-//	@Test
-//	public void testCheckInForUser() throws Exception {
-//
-//	}
+	@Test
+	public void testCheckInForUser() throws Exception {
+		Event testingEvent = new Event();
+
+		testingEvent.name = "A reason for Celebration";
+		testingEvent.location = "Trading Places";
+		testingEvent.dateAndTime = "1/2/1989 ~ 5:55 PM";
+		testingEvent.details= "";
+
+		events.save(testingEvent);
+
+		int eventID = testingEvent.getId();
+
+		Event retrievedEvent = events.findOne(eventID);
+
+		assertEquals(testingEvent.id, retrievedEvent.id);
+
+		events.delete(testingEvent);
+	}
 //
 //	@Test
 //	public void testListForUsersCheckedInAtEvent() throws Exception {
 //
 //	}
 //
-
-
+//	@Test
+//	public void testRequestUserInfo() throws Exception {
+//
+//	}
+//
+//	@Test
+//	public void testRequestUserInfoAccept() throws Exception {
+//
+//	}
+//
+// 	@Test
+//	public void testRequestUserInfoReject() throws Exception {
+//
+//	}
+//
 }
