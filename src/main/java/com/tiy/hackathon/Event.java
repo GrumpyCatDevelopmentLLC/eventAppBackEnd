@@ -25,8 +25,8 @@ public class Event {
 	@Column (nullable = false)
 	String details;
 
-	@ManyToOne
-	User user;
+//	@ManyToOne
+//	User user;
 
 	public int getId() {
 		return id;
@@ -68,13 +68,13 @@ public class Event {
 		this.details = details;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	public Event(String name, String location, String dateAndTime, String details) {
 		this.name = name;

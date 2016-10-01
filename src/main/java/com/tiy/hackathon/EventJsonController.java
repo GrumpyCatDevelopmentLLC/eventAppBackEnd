@@ -100,7 +100,7 @@ public class EventJsonController {
         User user = (User) session.getAttribute("user");
 
         thisEvent = new Event(thisEvent.name, thisEvent.location, thisEvent.dateAndTime, thisEvent.details);
-        thisEvent.user = user;
+//        thisEvent.user = user;
 
 
         System.out.println("My runtime repo: " + thisEvent.toString());
@@ -166,17 +166,17 @@ public class EventJsonController {
     }
 
 
-    ArrayList<Event> getMyEvents() {
-        ArrayList<Event> eventList = new ArrayList<Event>();
-        Iterable<Event> allEvents = events.findByUser(user);
-
-        if (user != null){
-            for (Event currentEvent : allEvents) {
-                eventList.add(currentEvent);
-            }
-        }
-        return eventList;
-    }
+//    ArrayList<Event> getMyEvents() {
+//        ArrayList<Event> eventList = new ArrayList<Event>();
+//        Iterable<Event> allEvents = events.findByUser(user);
+//
+//        if (user != null){
+//            for (Event currentEvent : allEvents) {
+//                eventList.add(currentEvent);
+//            }
+//        }
+//        return eventList;
+//    }
 
     ArrayList<Event> getAllEvents() {
         ArrayList<Event> eventList = new ArrayList<Event>();
@@ -201,24 +201,24 @@ public class EventJsonController {
 
         return myUsers;
     }
-    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
-    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
-    User user = (User) session.getAttribute("user");
-        return getAllMyContacts();
-    }
+//    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
+//    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
+//    User user = (User) session.getAttribute("user");
+//        return getAllMyContacts();
+//    }
 
 
-    ArrayList<Contacts> getAllMyContacts() {
-        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
-        Iterable<Contacts> allContacts = contacts.findByUser(user);
-
-        if (user != null){
-            for (Contacts currentFriend : allContacts) {
-                friendList.add(currentFriend);
-            }
-        }
-        return friendList;
-    }
+//    ArrayList<Contacts> getAllMyContacts() {
+//        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+//        Iterable<Contacts> allContacts = contacts.findByUser(user);
+//
+//        if (user != null){
+//            for (Contacts currentFriend : allContacts) {
+//                friendList.add(currentFriend);
+//            }
+//        }
+//        return friendList;
+//    }
 
     @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
     public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
@@ -237,6 +237,19 @@ public class EventJsonController {
         }
         return attendeeList;
     }
+
+    @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
+    public ArrayList<User> checkInAtEvent(HttpSession session) throws Exception{
+        User user = (User) session.getAttribute("user");
+        Event event = (Event) session.getAttribute("event");
+
+        AttendingEvents aEvent = new AttendingEvents(event, user);
+
+        attendingEvents.save(aEvent);
+
+        return getAllAttendees();
+    }
+
 
 
 }
