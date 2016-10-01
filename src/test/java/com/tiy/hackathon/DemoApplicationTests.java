@@ -193,11 +193,11 @@ public class DemoApplicationTests {
 		users.delete(tb);
 	}
 
-//	@Test //do we need this test????
-//	public void testListForUsersCheckedInAtEvent() throws Exception {
-//
-//	}
-//
+	@Test
+	public void testListForUsersCheckedInAtEvent() throws Exception {
+
+	}
+
 	@Test
 	public void testRequestUserInfoAccept() throws Exception {
 		User userIntiatiated = new User();
