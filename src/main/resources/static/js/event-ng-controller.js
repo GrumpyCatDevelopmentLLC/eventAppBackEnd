@@ -3,6 +3,8 @@ angular.module('EventApp', [])
 
     $scope.user = {};
 
+    $scope.loginUser = {};
+
     $scope.myUser;
 
     $scope.createUser = function () {
@@ -13,7 +15,7 @@ angular.module('EventApp', [])
                 console.log(response.data);
                 console.log("Adding data to scope...");
                 $scope.myUser = response.data;
-
+                $scope.user = {};
             },
             function errorCallBack(response) {
                 console.log("Unable to create user");
@@ -21,14 +23,15 @@ angular.module('EventApp', [])
         console.log("done with the callback");
     };
 
-    $scope.login = function(email, password) {
+    $scope.login = function() {
         console.log("about to login");
-        $http.post("/login.json?email=" + email + "&password=" + password)
+        $http.post("/login.json", $scope.loginUser)
         .then(
             function successCallBack (response) {
                 console.log(response.data);
                 console.log("logging in...");
                 $scope.myUser = response.data;
+                $scope.loginUser = {};
             },
             function errorCallBack (response){
                 console.log("unable to login")
