@@ -20,12 +20,16 @@ public class EventJsonController {
     @Autowired
      UserRepository users;
 
-//    @Autowired
-//     ContactRepository contacts;
+    @Autowired
+     ContactsRepository contacts;
+
+    @Autowired
+     AttendingEventsRepository attendingEvents;
 
 
 
     User user;
+    Event event;
 
 
     @RequestMapping(path = "/createAdmin.json", method = RequestMethod.POST)
@@ -41,23 +45,37 @@ public class EventJsonController {
         return theAdmin;
     }
 
-
     @RequestMapping(path = "/login.json", method = RequestMethod.POST)
     public User login(HttpSession session, @RequestBody User user) throws Exception {
 //    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
-        user = users.findFirstByEmail(user.email);
-        if (user == null) {
+        User newUser = users.findFirstByEmail(user.email);
+        if (newUser == null) {
             throw new Exception("User does not exist or was input incorrectly");
-
         } else if (!user.password.equals(user.getPassword())) {
             throw new Exception("Incorrect password");
         }
-        session.setAttribute("user", user);
-
+        session.setAttribute("user", newUser);
 //        return getMyEvents();
 //        return getAllEvents();
-        return user;
+        return newUser;
     }
+
+//    @RequestMapping(path = "/login.json", method = RequestMethod.POST)
+//    public User login(HttpSession session, @RequestBody User user) throws Exception {
+////    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
+//        user = users.findFirstByEmail(user.email);
+//        if (user == null) {
+//            throw new Exception("User does not exist or was input incorrectly");
+//
+//        } else if (!user.password.equals(user.getPassword())) {
+//            throw new Exception("Incorrect password");
+//        }
+//        session.setAttribute("user", user);
+//
+////        return getMyEvents();
+////        return getAllEvents();
+//        return user;
+//    }
 
     @RequestMapping(path = "/logout.json", method = RequestMethod.POST)
     public void logout(HttpSession session) {
@@ -183,23 +201,42 @@ public class EventJsonController {
 
         return myUsers;
     }
-//    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
-//    public ArrayList<Contact> allFriends(HttpSession session) throws Exception{
-//    User user = (User) session.getAttribute("user");
-//        return getAllMyContacts();
-//    }
-//
-//
-//    ArrayList<Event> getAllMyContacts() {
-//        ArrayList<Contact> friendList = new ArrayList<Contact>();
-//        Iterable<Contact> allFriends = events.findAll(); //change this to a whatever we name our find friend by user
-//
-//        if (user != null){
-//            for (Contact currentFriend : allFriends) {
-//                friendList.add(currentFriend);
-//            }
-//        }
-//        return friendList;
-//    }
+    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
+    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
+    User user = (User) session.getAttribute("user");
+        return getAllMyContacts();
+    }
+
+
+    ArrayList<Contacts> getAllMyContacts() {
+        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+        Iterable<Contacts> allContacts = contacts.findByUser(user);
+
+        if (user != null){
+            for (Contacts currentFriend : allContacts) {
+                friendList.add(currentFriend);
+            }
+        }
+        return friendList;
+    }
+
+    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
+    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
+//        User user = (User) session.getAttribute("user");
+        Event event = (Event) session.getAttribute("event");
+        return getAllAttendees();
+    }
+
+    ArrayList<User> getAllAttendees() {
+        ArrayList<User> attendeeList = new ArrayList<User>();
+        Iterable<User> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
+        if (user != null){
+            for (User currentUser : allUsersAtEvent) {
+                attendeeList.add(currentUser);
+            }
+        }
+        return attendeeList;
+    }
+
 
 }
