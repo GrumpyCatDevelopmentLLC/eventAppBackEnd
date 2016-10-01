@@ -8,14 +8,29 @@
 </head>
 <body ng-controller="EventController">
 
+<!--
+{{! changing the mustache delimiter so it doesn't conflict with  }}
+{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}
+{{=<% %>=}}
+-->
+
+
 <h1>Welcome to events!</h1>
 
 <span>
     <div>
-        <input type="text" placeholder="Event Name" ng-model="event.name"/>
+        <input type="text" placeholder="Event Name" ng-model="myEvent.name"/>
+        <input type="text" placeholder="Location" ng-model="myEvent.location"/>
+        <input type="text" placeholder="Date/Time" ng-model="myEvent.dateAndTime"/>
+        <input type="text" placeholder="Details" ng-model="myEvent.details"/>
+        <input type="submit" ng-click="newEvent()" value="Create Event"/>
+    </div>
 
+    <div ng-repeat="events in createdEvents">
+        {{events}}
     </div>
 </span>
+
 
 </body>
 </html>
