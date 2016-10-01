@@ -8,5 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserRepository extends CrudRepository <User, Integer> {
 
 	User findFirstByEmail (String email);
+	User findFirstByEmailAndPassword (String email, String password);
 
 }
