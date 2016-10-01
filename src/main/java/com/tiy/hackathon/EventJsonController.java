@@ -22,6 +22,8 @@ public class EventJsonController {
 //    @Autowired
 //     ContactRepository contacts;
 
+
+
     User user;
 
 
@@ -63,11 +65,11 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/createUser.json", method = RequestMethod.POST)
-    public User newUser(HttpSession session, String email, String displayName, String password) throws Exception{
+    public User newUser(HttpSession session, @RequestBody User user) throws Exception{
 //        public ArrayList<Event> newUser(HttpSession session, String email, String displayName, String password) throws Exception{
-        User user = users.findFirstByEmail(email);
+         user = users.findFirstByEmail(user.email);
         if (user == null) {
-            user = new User(email, displayName, password);
+            user = new User(user.email, user.displayName,user.password);
             users.save(user);
         }
         session.setAttribute("user", user);
@@ -75,10 +77,10 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/createEvent.json", method = RequestMethod.POST)
-    public ArrayList<Event> newEvent(HttpSession session, String name, String location, String dateAndTime, String details) throws Exception{
+    public ArrayList<Event> newEvent(HttpSession session, @RequestBody Event thisEvent) throws Exception{
         User user = (User) session.getAttribute("user");
 
-        Event thisEvent = new Event(name, location, dateAndTime, details);
+        thisEvent = new Event(thisEvent.name, thisEvent.location, thisEvent.dateAndTime, thisEvent.details);
         thisEvent.user = user;
 
 
@@ -90,13 +92,13 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/saveEvent.json", method = RequestMethod.POST)
-    public ArrayList<Event> saveEvent(HttpSession session, String name, String location, String dateAndTime, String details) throws Exception{
-        Event event = (Event) session.getAttribute("event");
-
-        event.name = name;
-        event.location = location;
-        event.dateAndTime = dateAndTime;
-        event.details = details;
+    public ArrayList<Event> saveEvent(HttpSession session, @RequestBody Event event) throws Exception{
+//        event = (Event) session.getAttribute("event");
+//
+//        event.name = name;
+//        event.location = location;
+//        event.dateAndTime = dateAndTime;
+//        event.details = details;
 
         System.out.println("My runtime repo: " + event.toString());
         events.save(event);
@@ -138,8 +140,8 @@ public class EventJsonController {
     }
 
     @RequestMapping(path= "/userInfo.json", method = RequestMethod.POST)
-    public String clickedUser(HttpSession session, int userID) throws Exception {
-        User findUser = users.findOne(userID);
+    public String clickedUser(HttpSession session, @RequestBody User user) throws Exception {
+        User findUser = users.findOne(user.id);
 
         return (findUser.displayName);
     }
