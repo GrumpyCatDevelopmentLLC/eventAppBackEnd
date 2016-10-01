@@ -117,12 +117,15 @@ public class EventJsonController {
         System.out.println("My runtime repo: " + thisEvent.toString());
         events.save(thisEvent);
 
+		System.out.println("Creating event");
+
 //        return getMyEvents();
         ArrayList<Event> myEvents = getAllEvents();
 		for (Event myEvent : myEvents) {
 			myResponse.responseEventContainer.add(myEvent);
 			System.out.println("adding to the array list...");
 		}
+		System.out.println("Returning list of events");
 		return myResponse;
     }
 
@@ -162,9 +165,15 @@ public class EventJsonController {
 
 
     @RequestMapping(path = "/allEvents.json", method = RequestMethod.POST)
-    public ArrayList<Event> allEvents(HttpSession session) throws Exception{
+    public EventResponseContainer allEvents(HttpSession session) throws Exception{
+		EventResponseContainer myResponse = new EventResponseContainer();
 
-        return getAllEvents();
+        ArrayList<Event> myEvents = getAllEvents();
+		for (Event myEvent : myEvents) {
+			myResponse.responseEventContainer.add(myEvent);
+		}
+		System.out.println("returning list of events");
+		return myResponse;
     }
 
     @RequestMapping(path= "/profile.json", method = RequestMethod.POST)
