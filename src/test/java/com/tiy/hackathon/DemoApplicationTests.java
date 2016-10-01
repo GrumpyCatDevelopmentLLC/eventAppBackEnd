@@ -195,7 +195,74 @@ public class DemoApplicationTests {
 
 	@Test
 	public void testListForUsersCheckedInAtEvent() throws Exception {
+		User user1 = new User();
+		User user2 = new User();
+		User user3 = new User();
+		User user4 = new User();
 
+
+		user1.email = "walltheusers.com";
+		user1.displayName = "qwudup";
+		user1.password = "toolate";
+		users.save(user1);
+
+		user2.email = "wdatboi@gmail.com";
+		user2.displayName = "qmemes";
+		user2.password = "yeabuddy";
+		users.save(user2);
+
+		user3.email = "wohnooooo.com";
+		user3.displayName = "qjk";
+		user3.password = "bacchus";
+		users.save(user3);
+
+		user4.email = "wrenfest@gmail.com";
+		user4.displayName = "qturkeyleg";
+		user4.password = "randomar";
+		users.save(user4);
+
+		Event everybodysEvent = new Event();
+		everybodysEvent.name = "Party people Part 2";
+		everybodysEvent.location = "Turner Field";
+		everybodysEvent.dateAndTime = "10/2/2016 ~ 4:45 PM";
+		everybodysEvent.details = "Bring it back yall bring it back yall here we go";
+		events.save(everybodysEvent);
+
+		AttendingEvents eventSave1 = new AttendingEvents(everybodysEvent, user1);
+		attendingEvents.save(eventSave1);
+
+		AttendingEvents eventSave2 = new AttendingEvents(everybodysEvent, user2);
+		attendingEvents.save(eventSave2);
+
+		AttendingEvents eventSave3 = new AttendingEvents(everybodysEvent, user3);
+		attendingEvents.save(eventSave3);
+
+		AttendingEvents eventSave4 = new AttendingEvents(everybodysEvent, user4);
+		attendingEvents.save(eventSave4);
+
+//      trying things here
+
+		Iterable<AttendingEvents> eventsFound = attendingEvents.findUsersByEvent(everybodysEvent);
+		ArrayList<AttendingEvents> eventList = new ArrayList<AttendingEvents>();
+		for (AttendingEvents currentEvent : eventsFound) {
+			eventList.add(currentEvent);
+		}
+
+		int alSize = eventList.size();
+
+
+		assertEquals(4, alSize);
+
+//		finish here
+
+		attendingEvents.delete(eventSave1);
+		attendingEvents.delete(eventSave2);
+		attendingEvents.delete(eventSave3);
+		attendingEvents.delete(eventSave4);
+		users.delete(user1);
+		users.delete(user2);
+		users.delete(user3);
+		users.delete(user4);
 	}
 
 	@Test
