@@ -113,10 +113,9 @@ public class DemoApplicationTests {
 		assertEquals(testingEvent.id, retEvent.id);
 		System.out.println(testingEvent.name +" " + retEvent.name);
 
-
 		events.delete(testingEvent);
 	}
-
+//
 //	@Test
 //	public void testCheckInForUser() throws Exception {
 //		Event testingEvent = new Event();
@@ -125,7 +124,7 @@ public class DemoApplicationTests {
 //		testingEvent.name = "A reason for Celebration";
 //		testingEvent.location = "Trading Places";
 //		testingEvent.dateAndTime = "1/2/1989 ~ 5:55 PM";
-//		testingEvent.details= "";
+//		testingEvent.details= "Perry's 50th Birthday";
 //
 //		events.save(testingEvent);
 //
