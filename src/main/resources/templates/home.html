@@ -17,26 +17,40 @@
 
 
 <!-- multiple buttons for one form? -->
-<%^user%>
-<div>
-    <input type="text" placeholder="email" ng-model="loginUser.email"/>
-    <input type="password" placeholder="Password" ng-model="loginUser.password"/>
-    <input type="button" ng-click="login()" value="login"/>
+<div ng-if="myUser==null">
+    <div>
+        <input type="text" placeholder="email" ng-model="loginUser.email"/>
+        <input type="password" placeholder="Password" ng-model="loginUser.password"/>
+        <input type="button" ng-click="login()" value="login"/>
+    </div>
+
+    <div>
+        <input type="text" placeholder="email" ng-model="user.email"/>
+        <input type="text" placeholder="displayName" ng-model="user.displayName"/>
+        <input type="password" placeholder="Password" ng-model="user.password"/>
+        <input type="button" ng-click="createUser()" value="Create User">
+    </div>
 </div>
 
-<div>
-    <input type="text" placeholder="email" ng-model="user.email"/>
-    <input type="text" placeholder="displayName" ng-model="user.displayName"/>
-    <input type="password" placeholder="Password" ng-model="user.password"/>
-    <input type="button" ng-click="createUser()" value="Create User">
-</div>
-<%/user%>
+
+<div ng-if="myUser!=null">
+    {{myUser.responseUser.displayName}} is logged in
+    <input type="button" ng-click="listEvents()" value="Get list of events"/>
+    <table>
+        <tr>
+            <th>Event</th>
+            <th>Attending</th>
+        </tr>
+        <tr ng-repeat="events in listEvents">
+            <td>{{events.details}}</td>
+            <td><input type="submit" ng-click="" value="Attenting Event"/></td>
+        </tr>
+    </table>
 
 
-<%#user%>
-<div>
-    <input type="button" ng-click="logout()" value="logout"/>
+
+
 </div>
-<%/user%>
+
 </body>
 </html>
