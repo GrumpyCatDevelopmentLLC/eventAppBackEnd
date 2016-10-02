@@ -38,12 +38,14 @@
     <input type="button" ng-click="listEvents()" value="Get list of events"/>
     <table>
         <tr>
-            <th>Event</th>
+            <th>Event Name</th>
+            <th>Event Details</th>
             <th>Attending</th>
         </tr>
         <tr ng-repeat="event in listEvents">
-            <td>{{event.details}} <input type="submit" ng-click="attendingEvent(event)" ng-bind="event" value="Attending Event"/></td>
-            <td></td>
+            <td>{{event.name}}</td>
+            <td>{{event.details}}</td>
+            <td><input type="submit" ng-click="attendingEvent(event)" value="Attending Event"/></td>
         </tr>
     </table>
 

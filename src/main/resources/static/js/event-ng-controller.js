@@ -81,10 +81,10 @@ angular.module('EventApp', [])
     $scope.attendingEvent = function(event) {
         console.log("Attempting to check in to event...");
         console.log(event);
-        $scope.getSpecificEvent(event.id);
+//        $scope.getSpecificEvent(event.id);
         var userAndEvent = {
             user: $scope.user,
-            event: event.id
+            event: event
         }
         console.log(userAndEvent);
         $http.post("/checkIn.json", userAndEvent)

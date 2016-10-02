@@ -284,19 +284,19 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
-    public AttendingResponseContainer checkInAtEvent(HttpSession session, Integer eventID) throws Exception{
+    public AttendingResponseContainer checkInAtEvent(HttpSession session, @RequestBody RecievedContactsContainer myContainer) throws Exception{
     	AttendingResponseContainer myResponse = new AttendingResponseContainer();
-        User user = (User) session.getAttribute("user");
-        Event event = getSpecificEvent(eventID);
-		System.out.println(user);
-		System.out.println(event);
 
-        AttendingEvents aEvent = new AttendingEvents(event, user);
+        User user = (User) session.getAttribute("user");
+		System.out.println(user.toString());
+		System.out.println(myContainer.event.toString());
+
+        AttendingEvents aEvent = new AttendingEvents(myContainer.event, user);
 
         attendingEvents.save(aEvent);
 
 
-        myResponse.myEvents = getAllAttendees();
+        myResponse.myEvents = attendingEvents.findUsersByEvent(myContainer.event);
 		return myResponse;
     }
 
