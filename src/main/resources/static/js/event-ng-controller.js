@@ -81,10 +81,12 @@ angular.module('EventApp', [])
     $scope.attendingEvent = function(event) {
         console.log("Attempting to check in to event...");
         console.log(event);
+//        $scope.getSpecificEvent(event.id);
         var userAndEvent = {
             user: $scope.user,
             event: event
         }
+        console.log(userAndEvent);
         $http.post("/checkIn.json", userAndEvent)
         .then(
             function successCallBack(response) {
@@ -96,6 +98,21 @@ angular.module('EventApp', [])
             },
             function errorCallBack(response) {
                 console.log("unable to check in");
+            });
+         console.log("Done with the callback");
+    };
+
+    $scope.getSpecificEvent = function(eventID) {
+        console.log("About to get event with ID " + eventID);
+        $http.get("/getSpecificEvent.json?eventID=" + eventID)
+        .then(
+            function successCallBack(response) {
+                console.log(response.data);
+                console.log("retrieving event...");
+                $scope.event = response.data;
+            },
+            function errorCallBack(response) {
+                console.log("Unable to retrieve event");
             });
          console.log("Done with the callback");
     };
