@@ -235,7 +235,7 @@ public class EventJsonController {
 
     }
 
-    @RequestMapping(path = "/peopleThatHaveInitiailzedContactWithMe.json", method = RequestMethod.POST)
+    @RequestMapping(path = "/peopleThatHaveInitializedContactWithMe.json", method = RequestMethod.POST)
     public ContactResponseContainer triedToContactMe(HttpSession session) throws Exception{
         User user = (User) session.getAttribute("user");
         ContactResponseContainer contactResponse = new ContactResponseContainer();
@@ -253,20 +253,16 @@ public class EventJsonController {
     }
 
     ArrayList<Contacts> getPeopleThatWantMyInfo() {
-        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+        ArrayList<Contacts> wannabeFriendList = new ArrayList<Contacts>();
         Iterable<Contacts> allContacts = contacts.findByContacted(user);
 
         if (user != null) {
             for (Contacts currentFriend : allContacts) {
-                friendList.add(currentFriend);
+                wannabeFriendList.add(currentFriend);
             }
         }
-        return friendList;
-
+        return wannabeFriendList;
     }
-
-
-
 
 
 

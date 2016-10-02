@@ -374,4 +374,158 @@ public class DemoApplicationTests {
 		users.delete(userContacted);
 	}
 
+	@Test
+	public void testPeopleIHaveTriedToContact() throws Exception {
+		User user1 = new User();
+		User user2 = new User();
+		User user3 = new User();
+		User user4 = new User();
+		User user5 = new User();
+		User userInt = new User();
+
+		user1.email = "tme.com";
+		user1.displayName = "meept";
+		user1.password = "fwbw";
+		users.save(user1);
+
+		user2.email = "tewia@gmail.com";
+		user2.displayName = "tot";
+		user2.password = "onedance";
+		users.save(user2);
+
+		user3.email = "ttuek@yahoo.com";
+		user3.displayName = "hptcomt";
+		user3.password = "sag";
+		users.save(user3);
+
+		user4.email = "tnmifme@gmail.com";
+		user4.displayName = "Stickt";
+		user4.password = "reply";
+		users.save(user4);
+
+		user5.email = "titwy@gmail.com";
+		user5.displayName = "Ghwyt";
+		user5.password = "wat";
+		users.save(user5);
+
+		userInt.email = "tiwantallthefriends@gmail.com";
+		userInt.displayName = "Like mee";
+		userInt.password = "friendsaregreat";
+		users.save(userInt);
+
+
+		Contacts testContact = new Contacts(userInt, user1);
+		Contacts testContact2 = new Contacts(userInt, user2);
+		Contacts testContact3 = new Contacts(userInt, user3);
+		Contacts testContact4 = new Contacts(userInt, user4);
+		Contacts testContact5 = new Contacts(userInt, user5);
+		contacts.save(testContact);
+		contacts.save(testContact2);
+		contacts.save(testContact3);
+		contacts.save(testContact4);
+		contacts.save(testContact5);
+
+
+		Iterable <Contacts> contactsFound =  contacts.findByInitialContact(userInt);
+		ArrayList<Contacts> contactsList = new ArrayList<Contacts>();
+		for(Contacts contact: contactsFound) {
+			contactsList.add(contact);
+		}
+
+
+		int alSize = contactsList.size();
+
+		assertEquals(5, alSize);
+
+
+		contacts.delete(testContact);
+		contacts.delete(testContact2);
+		contacts.delete(testContact3);
+		contacts.delete(testContact4);
+		contacts.delete(testContact5);
+		users.delete(user1);
+		users.delete(user2);
+		users.delete(user3);
+		users.delete(user4);
+		users.delete(user5);
+		users.delete(userInt);
+	}
+
+	@Test
+	public void testPeopleThatHaveTriedToContactMe() throws Exception {
+		User user1 = new User();
+		User user2 = new User();
+		User user3 = new User();
+		User user4 = new User();
+		User user5 = new User();
+		User userInt = new User();
+
+		user1.email = "stme.com";
+		user1.displayName = "smeept";
+		user1.password = "fwbw";
+		users.save(user1);
+
+		user2.email = "stewia@gmail.com";
+		user2.displayName = "stot";
+		user2.password = "onedance";
+		users.save(user2);
+
+		user3.email = "sttueks@yahoo.com";
+		user3.displayName = "shptcomts";
+		user3.password = "sag";
+		users.save(user3);
+
+		user4.email = "stnmifme@gmail.com";
+		user4.displayName = "Stickts";
+		user4.password = "reply";
+		users.save(user4);
+
+		user5.email = "stitwy@gmail.com";
+		user5.displayName = "Ghwyts";
+		user5.password = "wat";
+		users.save(user5);
+
+		userInt.email = "stiwantallthefriends@gmail.com";
+		userInt.displayName = "Like mees";
+		userInt.password = "friendsaregreat";
+		users.save(userInt);
+
+
+		Contacts testContact = new Contacts(userInt, user1);
+		Contacts testContact2 = new Contacts(user2, user1);
+		Contacts testContact3 = new Contacts(user3, user1);
+		Contacts testContact4 = new Contacts(user4, user1);
+		Contacts testContact5 = new Contacts(user5, user1);
+		contacts.save(testContact);
+		contacts.save(testContact2);
+		contacts.save(testContact3);
+		contacts.save(testContact4);
+		contacts.save(testContact5);
+
+
+		Iterable <Contacts> contactsFound =  contacts.findByContacted(user1);
+		ArrayList<Contacts> contactsList = new ArrayList<Contacts>();
+		for(Contacts contact: contactsFound) {
+			contactsList.add(contact);
+		}
+
+
+		int alSize = contactsList.size();
+
+		assertEquals(5, alSize);
+
+
+		contacts.delete(testContact);
+		contacts.delete(testContact2);
+		contacts.delete(testContact3);
+		contacts.delete(testContact4);
+		contacts.delete(testContact5);
+		users.delete(user1);
+		users.delete(user2);
+		users.delete(user3);
+		users.delete(user4);
+		users.delete(user5);
+		users.delete(userInt);
+	}
+	
 }
