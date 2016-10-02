@@ -41,9 +41,9 @@
             <th>Event</th>
             <th>Attending</th>
         </tr>
-        <tr ng-repeat="events in listEvents">
-            <td>{{events.details}}</td>
-            <td><input type="submit" ng-click="" value="Attenting Event"/></td>
+        <tr ng-repeat="event in listEvents">
+            <td>{{event.details}} <input type="submit" ng-click="attendingEvent(event)" ng-bind="event" value="Attending Event"/></td>
+            <td></td>
         </tr>
     </table>
 

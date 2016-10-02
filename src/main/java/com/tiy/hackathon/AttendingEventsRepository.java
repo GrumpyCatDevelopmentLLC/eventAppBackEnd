@@ -10,4 +10,5 @@ import java.util.ArrayList;
 public interface AttendingEventsRepository extends CrudRepository<AttendingEvents, Integer> {
 //    ArrayList<User> findUsersByEvent(Event event);
     ArrayList<AttendingEvents> findUsersByEvent(Event event);
+    ArrayList<User> findUserByEvent(Event event);
 }
