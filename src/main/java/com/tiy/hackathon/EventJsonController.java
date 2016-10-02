@@ -172,24 +172,96 @@ public class EventJsonController {
 
         return myUsers;
     }
-//    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
-//    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
-//    User user = (User) session.getAttribute("user");
-//        return getAllMyContacts();
-//    }
+    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
+    public ContactResponseContainer allContacts(HttpSession session) throws Exception{
+    User user = (User) session.getAttribute("user");
+    ContactResponseContainer contactResponse = new ContactResponseContainer();
+
+        ArrayList<Contacts> contactList = getAllMyContacts();
+        int contactSize = contactList.size();
+
+        if (contactSize == 0){
+            contactResponse.errorMessage = "User does not have any contacts....";
+        }else {
+            contactResponse.contactsALContainer = contactList;
+            System.out.println(user.displayName + "contacts should be displaying momentarily");
+        }
+        return contactResponse;
+    }
+
+    ArrayList<Contacts> getAllMyContacts() {
+        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+        Iterable<Contacts> allContacts = contacts.findByInitialContact(user); //user from session should be one initializing so I think this works
+
+        if (user != null) {
+            for (Contacts currentFriend : allContacts) {
+                if (currentFriend.giveInfo == true)
+                    friendList.add(currentFriend);
+            }
+        }
+        return friendList;
+    }
+
+    @RequestMapping(path = "/peopleIInitializedContactWith.json", method = RequestMethod.POST)
+    public ContactResponseContainer triedToContact(HttpSession session) throws Exception{
+        User user = (User) session.getAttribute("user");
+        ContactResponseContainer contactResponse = new ContactResponseContainer();
+
+        ArrayList<Contacts> contactList = getPeopleIInitializedContactWith();
+        int contactSize = contactList.size();
+
+        if (contactSize == 0){
+            contactResponse.errorMessage = "User has not tried to initialize contact with other people.";
+        }else {
+            contactResponse.contactsALContainer = contactList;
+            System.out.println(user.displayName + "contacts they have tried to contact should display momentarily");
+        }
+        return contactResponse;
+    }
+
+    ArrayList<Contacts> getPeopleIInitializedContactWith() {
+        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+        Iterable<Contacts> allContacts = contacts.findByInitialContact(user); //user from session should be one initializing so I think this works
+
+        if (user != null) {
+            for (Contacts currentFriend : allContacts) {
+                friendList.add(currentFriend);
+            }
+        }
+        return friendList;
+
+    }
+
+    @RequestMapping(path = "/peopleThatHaveInitializedContactWithMe.json", method = RequestMethod.POST)
+    public ContactResponseContainer triedToContactMe(HttpSession session) throws Exception{
+        User user = (User) session.getAttribute("user");
+        ContactResponseContainer contactResponse = new ContactResponseContainer();
+
+        ArrayList<Contacts> contactList = getPeopleThatWantMyInfo();
+        int contactSize = contactList.size();
+
+        if (contactSize == 0){
+            contactResponse.errorMessage = "People have not tried to contact you.";
+        }else {
+            contactResponse.contactsALContainer = contactList;
+            System.out.println(user.displayName + "people that have tried to contact this user should display momentarily");
+        }
+        return contactResponse;
+    }
+
+    ArrayList<Contacts> getPeopleThatWantMyInfo() {
+        ArrayList<Contacts> wannabeFriendList = new ArrayList<Contacts>();
+        Iterable<Contacts> allContacts = contacts.findByContacted(user);
+
+        if (user != null) {
+            for (Contacts currentFriend : allContacts) {
+                wannabeFriendList.add(currentFriend);
+            }
+        }
+        return wannabeFriendList;
+    }
 
 
-//    ArrayList<Contacts> getAllMyContacts() {
-//        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
-//        Iterable<Contacts> allContacts = contacts.findByUser(user);
-//
-//        if (user != null){
-//            for (Contacts currentFriend : allContacts) {
-//                friendList.add(currentFriend);
-//            }
-//        }
-//        return friendList;
-//    }
 
 //    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
 //    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
