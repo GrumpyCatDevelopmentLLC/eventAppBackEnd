@@ -274,4 +274,14 @@ public class EventJsonController {
 //        return getAllAttendees();
 //    }
 
+	@RequestMapping(path = "/getListOfEvents.json", method = RequestMethod.GET)
+	public EventResponseContainer getListOfEvents() {
+		EventResponseContainer myResponse = new EventResponseContainer();
+		ArrayList<Event> gotEvents = getAllEvents();
+		for(Event myEvent : gotEvents) {
+			myResponse.responseEventContainer.add(myEvent);
+		}
+		return myResponse;
+	}
+
 }
