@@ -48,7 +48,6 @@ public class EventJsonController {
     @RequestMapping(path = "/login.json", method = RequestMethod.POST)
     public UserResponseContainer login(HttpSession session, @RequestBody User user) throws Exception {
     	UserResponseContainer myResponse = new UserResponseContainer();
-//    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
         User newUser = users.findFirstByEmail(user.email);
         if (newUser == null) {
             myResponse.errorMessage = "User does not exist or was input incorrectly";
@@ -57,29 +56,11 @@ public class EventJsonController {
         } else if(newUser != null && newUser.password.equals(newUser.getPassword())) {
 			System.out.println(user.email + " is logging in");
 			session.setAttribute("user", newUser);
-//        return getMyEvents();
-//        return getAllEvents();
 			myResponse.responseUser = newUser;
 		}
 		return myResponse;
     }
 
-//    @RequestMapping(path = "/login.json", method = RequestMethod.POST)
-//    public User login(HttpSession session, @RequestBody User user) throws Exception {
-////    public ArrayList<Event> login(HttpSession session, String email, String password) throws Exception {
-//        user = users.findFirstByEmail(user.email);
-//        if (user == null) {
-//            throw new Exception("User does not exist or was input incorrectly");
-//
-//        } else if (!user.password.equals(user.getPassword())) {
-//            throw new Exception("Incorrect password");
-//        }
-//        session.setAttribute("user", user);
-//
-////        return getMyEvents();
-////        return getAllEvents();
-//        return user;
-//    }
 
     @RequestMapping(path = "/logout.json", method = RequestMethod.POST)
     public void logout(HttpSession session) {
@@ -111,15 +92,11 @@ public class EventJsonController {
 		EventResponseContainer myResponse = new EventResponseContainer();
 
         thisEvent = new Event(thisEvent.name, thisEvent.location, thisEvent.dateAndTime, thisEvent.details);
-//        thisEvent.user = user;
-
-
         System.out.println("My runtime repo: " + thisEvent.toString());
         events.save(thisEvent);
 
 		System.out.println("Creating event");
 
-//        return getMyEvents();
         ArrayList<Event> myEvents = getAllEvents();
 		for (Event myEvent : myEvents) {
 			myResponse.responseEventContainer.add(myEvent);
@@ -131,17 +108,9 @@ public class EventJsonController {
 
     @RequestMapping(path = "/saveEvent.json", method = RequestMethod.POST)
     public ArrayList<Event> saveEvent(HttpSession session, @RequestBody Event event) throws Exception{
-//        event = (Event) session.getAttribute("event");
-//
-//        event.name = name;
-//        event.location = location;
-//        event.dateAndTime = dateAndTime;
-//        event.details = details;
-
         System.out.println("My runtime repo: " + event.toString());
         events.save(event);
 
-//        return getMyEvents();
         return getAllEvents();
     }
 
@@ -152,16 +121,8 @@ public class EventJsonController {
         System.out.println("My runtime repo to delete event: " + event.toString());
         events.delete(event);
 
-//        return getMyEvents();
         return getAllEvents();
     }
-
-
-//    @RequestMapping(path = "/myEvents", method = RequestMethod.POST)
-//    public ArrayList<Event> myEvents(HttpSession session) throws Exception{
-//
-//        return getMyEvents();
-//    }
 
 
     @RequestMapping(path = "/allEvents.json", method = RequestMethod.POST)
@@ -176,6 +137,7 @@ public class EventJsonController {
 		return myResponse;
     }
 
+    // can the user be saved in a cache?
     @RequestMapping(path= "/profile.json", method = RequestMethod.POST)
     public User thisUsersProfile(HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
@@ -189,20 +151,7 @@ public class EventJsonController {
 
         return (findUser.displayName);
     }
-
-
-//    ArrayList<Event> getMyEvents() {
-//        ArrayList<Event> eventList = new ArrayList<Event>();
-//        Iterable<Event> allEvents = events.findByUser(user);
-//
-//        if (user != null){
-//            for (Event currentEvent : allEvents) {
-//                eventList.add(currentEvent);
-//            }
-//        }
-//        return eventList;
-//    }
-
+	
     ArrayList<Event> getAllEvents() {
         ArrayList<Event> eventList = new ArrayList<Event>();
         Iterable<Event> allEvents = events.findAll();
@@ -214,6 +163,7 @@ public class EventJsonController {
         return eventList;
     }
 
+    //get rid of?
     @RequestMapping(path = "/allUsers.json", method = RequestMethod.GET)
     public List<User> allUsers() {
         Iterable<User> userIterable = users.findAll();
