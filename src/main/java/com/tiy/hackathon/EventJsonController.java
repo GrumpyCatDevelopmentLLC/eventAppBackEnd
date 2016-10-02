@@ -175,24 +175,35 @@ public class EventJsonController {
 
         return myUsers;
     }
-//    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
-//    public ArrayList<Contacts> allFriends(HttpSession session) throws Exception{
-//    User user = (User) session.getAttribute("user");
-//        return getAllMyContacts();
-//    }
+    @RequestMapping(path = "/myContacts.json", method = RequestMethod.POST)
+    public ContactResponseContainer allContacts(HttpSession session) throws Exception{
+    User user = (User) session.getAttribute("user");
+    ContactResponseContainer contactResponse = new ContactResponseContainer();
+
+        ArrayList<Contacts> contactList = getAllMyContacts();
+        int contactSize = contactList.size();
+
+        if (contactSize == 0){
+            contactResponse.errorMessage = "User does not have any contacts....";
+        }else {
+            contactResponse.contactsALContainer = contactList;
+            System.out.println(user.displayName + "contacts should be displaying momentarily");
+        }
+        return contactResponse;
+    }
 
 
-//    ArrayList<Contacts> getAllMyContacts() {
-//        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
-//        Iterable<Contacts> allContacts = contacts.findByUser(user);
-//
-//        if (user != null){
-//            for (Contacts currentFriend : allContacts) {
-//                friendList.add(currentFriend);
-//            }
-//        }
-//        return friendList;
-//    }
+    ArrayList<Contacts> getAllMyContacts() {
+        ArrayList<Contacts> friendList = new ArrayList<Contacts>();
+        Iterable<Contacts> allContacts = contacts.findByInitialContact(user); //user from session should be one initializing so I think this works
+
+        if (user != null){
+            for (Contacts currentFriend : allContacts) {
+                friendList.add(currentFriend);
+            }
+        }
+        return friendList;
+    }
 
 //    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
 //    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
