@@ -6,6 +6,7 @@ angular.module('EventApp', [])
     $scope.loginUser = {};
     $scope.myUser;
     $scope.createdEvent;
+    $scope.listEvents = {}
 
     $scope.createUser = function () {
         console.log("about to create user");
@@ -57,20 +58,25 @@ angular.module('EventApp', [])
          console.log("Done with the callback");
     };
 
-//    $scope.logout = function() {
-//        console.log("logging out...");
-//        $http.post("/logout")
-//        .then(
-//            function successCallBack(response) {
-//                console.log(response.data);
-//                console.log("logging out");
-////                $scope.user = {};
-//            },
-//            function errorCallBack(response) {
-//                console.log("Could not log out");
-//            });
-//         console.log("done with the callback");
-//    };
+    $scope.listEvents = function() {
+        console.log("Getting list of events");
+        $http.get("/getListOfEvents.json")
+        .then(
+            function successCalBack(response) {
+                console.log(response.data);
+                console.log("retrieving events...");
+                $scope.createdEvent = response.data;
+                $scope.listEvents = $scope.createdEvent.responseEventContainer;
 
+            },
+            function errorCallBack(response) {
+                console.log("Unable to retrieve events");
+            });
+         console.log("Done with the callback");
+    };
+
+    $scope.attendingEvent = function() {
+        console.log("Attempting to check in to event...")
+    }
 
 });

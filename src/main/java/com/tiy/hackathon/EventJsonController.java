@@ -70,7 +70,6 @@ public class EventJsonController {
 
     @RequestMapping(path = "/createUser.json", method = RequestMethod.POST)
     public UserResponseContainer newUser(HttpSession session, @RequestBody User user) throws Exception{
-//        public ArrayList<Event> newUser(HttpSession session, String email, String displayName, String password) throws Exception{
 		UserResponseContainer myResponse = new UserResponseContainer();
         User newUser = users.findFirstByEmail(user.email);
 		System.out.println(user.email + " is trying to get created");
@@ -97,21 +96,19 @@ public class EventJsonController {
 
 		System.out.println("Creating event");
 
-        ArrayList<Event> myEvents = getAllEvents();
-		for (Event myEvent : myEvents) {
-			myResponse.responseEventContainer.add(myEvent);
-			System.out.println("adding to the array list...");
-		}
+        myResponse.responseEventContainer = getAllEvents();
 		System.out.println("Returning list of events");
 		return myResponse;
     }
 
     @RequestMapping(path = "/saveEvent.json", method = RequestMethod.POST)
-    public ArrayList<Event> saveEvent(HttpSession session, @RequestBody Event event) throws Exception{
+    public EventResponseContainer saveEvent(HttpSession session, @RequestBody Event event) throws Exception{
+    	EventResponseContainer myResponse = new EventResponseContainer();
         System.out.println("My runtime repo: " + event.toString());
         events.save(event);
 
-        return getAllEvents();
+        myResponse.responseEventContainer = getAllEvents();
+		return myResponse;
     }
 
     @RequestMapping(path = "/deleteEvent.json", method = RequestMethod.POST)
@@ -151,7 +148,7 @@ public class EventJsonController {
 
         return (findUser.displayName);
     }
-	
+
     ArrayList<Event> getAllEvents() {
         ArrayList<Event> eventList = new ArrayList<Event>();
         Iterable<Event> allEvents = events.findAll();

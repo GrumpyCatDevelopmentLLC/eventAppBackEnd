@@ -25,8 +25,8 @@
         <input type="text" placeholder="Details" ng-model="myEvent.details"/>
         <input type="submit" ng-click="newEvent()" value="Create Event"/>
     </div>
-
-    <div ng-repeat="events in createdEvents">
+    <input type="submit" ng-click="listEvents()" value="Get list of events"/>
+    <div ng-repeat="events in createdEvent">
         {{events}}
     </div>
 </span>
