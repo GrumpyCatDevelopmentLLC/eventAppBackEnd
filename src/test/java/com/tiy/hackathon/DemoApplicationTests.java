@@ -514,7 +514,6 @@ public class DemoApplicationTests {
 
 		assertEquals(5, alSize);
 
-
 		contacts.delete(testContact);
 		contacts.delete(testContact2);
 		contacts.delete(testContact3);
@@ -527,5 +526,5 @@ public class DemoApplicationTests {
 		users.delete(user5);
 		users.delete(userInt);
 	}
-	
+
 }
