@@ -6,7 +6,10 @@ angular.module('EventApp', [])
     $scope.loginUser = {};
     $scope.myUser;
     $scope.createdEvent;
-    $scope.listEvents = {}
+    $scope.listEvents = {};
+    $scope.checkInMaster;
+    $scope.checkInList = {};
+    $scope.event;
 
     $scope.createUser = function () {
         console.log("about to create user");
@@ -62,7 +65,7 @@ angular.module('EventApp', [])
         console.log("Getting list of events");
         $http.get("/getListOfEvents.json")
         .then(
-            function successCalBack(response) {
+            function successCallBack(response) {
                 console.log(response.data);
                 console.log("retrieving events...");
                 $scope.createdEvent = response.data;
@@ -75,8 +78,26 @@ angular.module('EventApp', [])
          console.log("Done with the callback");
     };
 
-    $scope.attendingEvent = function() {
-        console.log("Attempting to check in to event...")
-    }
+    $scope.attendingEvent = function(event) {
+        console.log("Attempting to check in to event...");
+        console.log(event);
+        var userAndEvent = {
+            user: $scope.user,
+            event: event
+        }
+        $http.post("/checkIn.json", userAndEvent)
+        .then(
+            function successCallBack(response) {
+                console.log(userAndEvent);
+                console.log(response.data);
+                console.log("checking in");
+                $scope.checkInMaster = response.data;
+                $scope.checkInList = $scope.checkInMaster.myEvent;
+            },
+            function errorCallBack(response) {
+                console.log("unable to check in");
+            });
+         console.log("Done with the callback");
+    };
 
 });

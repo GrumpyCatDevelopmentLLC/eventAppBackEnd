@@ -263,35 +263,42 @@ public class EventJsonController {
 
 
 
-//    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
-//    public ArrayList<User> attendingEvent(HttpSession session) throws Exception{
-////        User user = (User) session.getAttribute("user");
-//        Event event = (Event) session.getAttribute("event");
-//        return getAllAttendees();
-//    }
-
-//    ArrayList<User> getAllAttendees() {
-//        ArrayList<User> attendeeList = new ArrayList<User>();
-//        Iterable<User> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
-//        if (user != null){
-//            for (User currentUser : allUsersAtEvent) {
-//                attendeeList.add(currentUser);
-//            }
-//        }
-//        return attendeeList;
-//    }
-
-//    @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
-//    public ArrayList<User> checkInAtEvent(HttpSession session) throws Exception{
+    @RequestMapping(path = "/usersAtEvent.json", method = RequestMethod.POST)
+    public AttendingResponseContainer attendingEvent(HttpSession session) throws Exception{
+    	AttendingResponseContainer myResponse = new AttendingResponseContainer();
 //        User user = (User) session.getAttribute("user");
-//        Event event = (Event) session.getAttribute("event");
-//
-//        AttendingEvents aEvent = new AttendingEvents(event, user);
-//
-//        attendingEvents.save(aEvent);
-//
-//        return getAllAttendees();
-//    }
+        Event event = (Event) session.getAttribute("event");
+		myResponse.myEvents = attendingEvents.findUsersByEvent(event);
+        return myResponse;
+    }
+
+    ArrayList<AttendingEvents> getAllAttendees() {
+        ArrayList<AttendingEvents> attendeeList = new ArrayList<AttendingEvents>();
+        Iterable<AttendingEvents> allUsersAtEvent = attendingEvents.findUsersByEvent(event);
+        if (user != null){
+            for (AttendingEvents currentUser : allUsersAtEvent) {
+                attendeeList.add(currentUser);
+            }
+        }
+        return attendeeList;
+    }
+
+    @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
+    public AttendingResponseContainer checkInAtEvent(HttpSession session) throws Exception{
+    	AttendingResponseContainer myResponse = new AttendingResponseContainer();
+        User user = (User) session.getAttribute("user");
+        Event event = (Event) session.getAttribute("event");
+		System.out.println(user);
+		System.out.println(event);
+
+        AttendingEvents aEvent = new AttendingEvents(event, user);
+
+        attendingEvents.save(aEvent);
+
+
+        myResponse.myEvents = getAllAttendees();
+		return myResponse;
+    }
 
 	@RequestMapping(path = "/getListOfEvents.json", method = RequestMethod.GET)
 	public EventResponseContainer getListOfEvents() {
