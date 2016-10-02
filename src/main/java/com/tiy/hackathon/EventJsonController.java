@@ -284,10 +284,10 @@ public class EventJsonController {
     }
 
     @RequestMapping(path = "/checkIn.json", method = RequestMethod.POST)
-    public AttendingResponseContainer checkInAtEvent(HttpSession session) throws Exception{
+    public AttendingResponseContainer checkInAtEvent(HttpSession session, Integer eventID) throws Exception{
     	AttendingResponseContainer myResponse = new AttendingResponseContainer();
         User user = (User) session.getAttribute("user");
-        Event event = (Event) session.getAttribute("event");
+        Event event = getSpecificEvent(eventID);
 		System.out.println(user);
 		System.out.println(event);
 
@@ -309,5 +309,23 @@ public class EventJsonController {
 		}
 		return myResponse;
 	}
+
+	@RequestMapping(path = "/getSpecificEvent.json", method = RequestMethod.GET)
+    public Event getSpecificEvent(Integer eventID) {
+        System.out.println("finding event with event id " + eventID);
+        Event myEvent = events.findById(eventID);
+        System.out.println("Found event " + myEvent.name);
+        return myEvent;
+    }
+
+    @RequestMapping(path = "/getListOfAllAtEvent", method = RequestMethod.GET)
+    public AttendingResponseContainer getListOfAttending() {
+        AttendingResponseContainer myResponse = new AttendingResponseContainer();
+        Iterable<AttendingEvents> allAttending = attendingEvents.findAll();
+        for (AttendingEvents myAttendance : allAttending) {
+            myResponse.myEvents.add(myAttendance);
+        }
+        return myResponse;
+    }
 
 }
